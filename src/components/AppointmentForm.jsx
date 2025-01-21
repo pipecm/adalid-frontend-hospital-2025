@@ -34,7 +34,7 @@ const AppointmentForm = () => {
             <div className="card-body">
                 <form className="contact-form" onSubmit={handleSubmit}>
                     <div className="mb-3">
-                        <input type="text" id="name" className="form-control" placeholder="Nombre" onChange={e => setName(e.target.value)}/>
+                        <input type="text" id="name" className="form-control" placeholder="Nombre" onChange={e => setName(e.target.value)} autoFocus />
                     </div>
                     <div className="mb-3">
                         <input type="email" id="email" className="form-control" placeholder="Email" onChange={e => setEmail(e.target.value)}/>

@@ -1,13 +1,12 @@
 import { useContext } from "react";
-import { MenuContext } from "../context/MenuContext";
+import { CurrentViewContext } from "../context/CurrentViewContext";
 
 const Header = () => {
     const KEY_HOME_VIEW = "home";
 	const KEY_STAFF_VIEW = "staff";
-	const KEY_CONTACT_VIEW = "contact";
     const KEY_APPOINTMENT_VIEW = "appointment";
 
-    const { changeView } = useContext(MenuContext);
+    const { changeView } = useContext(CurrentViewContext);
 
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-primary hospital-menu">
@@ -20,9 +19,6 @@ const Header = () => {
                         </li>
                         <li className="nav-item">
                             <button className="nav-link active" onClick={() => changeView(KEY_STAFF_VIEW)}>Médicos</button>
-                        </li>
-                        <li className="nav-item">
-                            <button className="nav-link active" onClick={() => changeView(KEY_CONTACT_VIEW)}>Contacto</button>
                         </li>
                     </ul>
                 </div>

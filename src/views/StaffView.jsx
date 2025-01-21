@@ -1,9 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Profiler } from "react";
 import DoctorList from '../components/DoctorList'
 
 const StaffView = () => {
     const [doctors, setDoctors] = useState([]);
     const [error, setError] = useState(null);
+
+    const onRenderCallback = (id, phase, actualDuration) => {
+		console.log(`${id} (${phase}) tomó ${actualDuration} ms para renderizar`);
+	};
 
      useEffect(() => {
         const fetchDoctors = async () => {
@@ -16,11 +20,15 @@ const StaffView = () => {
         }
 
         fetchDoctors();
-    }, [doctors]);
+    }, []);
 
     if (error) return <h3>{`Error al cargar los datos: ${error}`}</h3>;
         
-    return <DoctorList doctors={doctors} />;
+    return (
+        <Profiler id="staffViewProfiler" onRender={onRenderCallback}>
+            <DoctorList doctors={doctors} />;
+        </Profiler>
+    );
 };
 
 export default StaffView;

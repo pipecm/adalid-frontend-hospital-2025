@@ -1,8 +1,8 @@
 import { createContext, useState } from "react";
 
-export const MenuContext = createContext();
+export const CurrentViewContext = createContext();
 
-const MenuProvider = ({ children }) => {
+const CurrentViewProvider = ({ children }) => {
     const KEY_HOME_VIEW = "home";
     const [currentView, setCurrentView] = useState(KEY_HOME_VIEW);
 
@@ -11,10 +11,10 @@ const MenuProvider = ({ children }) => {
     }
 
     return (
-        <MenuContext.Provider value={{ currentView, changeView }} >
+        <CurrentViewContext.Provider value={{ currentView, changeView }} >
             {children}
-        </MenuContext.Provider>   
+        </CurrentViewContext.Provider>   
     );
 }
 
-export default MenuProvider;
+export default CurrentViewProvider;
