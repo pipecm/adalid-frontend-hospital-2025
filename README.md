@@ -54,3 +54,23 @@ Para la implementación de los modales para ver mayores detalles de servicios y 
 
 ### Optimización de rendimiento y Profiler
 Finalmente, se implementó el uso de un `Profiler` en el componente que muestra la lista de especialidades obtenidas desde el `Context`mencionado anteriormente. Asimismo, para optimizar el renderizado de dicho componente se implementó mediante `React.memo()` el componente `SpecialtyView`.
+
+## Ejercicio técnico Nº3 - Módulo 4
+### Implementación de Vistas Complejas con ReactJS
+Para las vistas complejas se implementó un `Context`, el cual tiene por objeto almacenar el valor de la vista actual, la cual está seteada por defecto para la vista `Home`.
+
+### Optimización del DOM Virtual y Uso de Fragmentos
+En la aplicación se usaron fragmentos en varios de los componentes que eventualmente podría implicar el uso de etiquetas `div` innecesarias, como por ejemplo `CurrentView`.
+
+### Uso de Referencias y Callbacks
+En el componente `AppointmentForm` se añadió foco al campo del nombre del usuario, el cual corresponde al primer campo que aparece en el formulario, desde arriba hacia abajo.
+
+### Manejo de Datos con API REST Simulada
+Para simular una llamada a una API REST se utilizaron archivos JSON con información "en duro", de manera de poder procesarlos asíncronamente mediante `fetch()` y `useEffect()`.
+
+### Optimización de Rendimiento y Uso de Profiler
+Se implementó el uso del `Profiler` en los componentes que procesan las listas de médicos y servicios, con ello se logró optimizar su rendimiento con respecto a un commit anterior en la rama de desarrollo correspondiente a esta tarea.
+
+### Comprobación de Tipos con PropTypes
+Se comprueban los tipos de datos tal como se hizo con la tarea anterior, lo cual implica que se imprime un mensaje de error en la consola en caso de encontrar un error de datos relativo a PropTypes.
+
