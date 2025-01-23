@@ -4,7 +4,7 @@ import ServiceCard from "./ServiceCard";
 export default function ServiceList({ services }) {
 
     return (
-        <div>
+        <div id="services">
             <h2>Servicios</h2>
             <ul className="services-list">
                 {services.map(service => (
