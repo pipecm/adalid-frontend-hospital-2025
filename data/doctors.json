@@ -30,10 +30,5 @@
         "specialty": "Cardiología",
         "experience": "Experimentada en el tratamiento de afecciones al corazón",
         "yearsOfExperience": 8
-    },
-    {
-        "name": "Unknown",
-        "imageUrl": "../../images/medico_04.webp",
-        "specialty": "Cardiología"
     }
 ]

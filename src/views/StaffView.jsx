@@ -1,5 +1,6 @@
 import { useState, useEffect, Profiler } from "react";
 import DoctorList from '../components/DoctorList'
+import { findAllDoctors } from "../client/ApiClient";
 
 const StaffView = () => {
     const [doctors, setDoctors] = useState([]);
@@ -12,7 +13,7 @@ const StaffView = () => {
      useEffect(() => {
         const fetchDoctors = async () => {
             try {
-                let response = await fetch("data/doctors.json").then((response) => response.json());
+                let response = await findAllDoctors();
                 setDoctors(response);
             } catch(error) {
                 setError(error);
