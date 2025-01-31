@@ -13,6 +13,7 @@ export default function ServiceList({ services }) {
                     </li>
                 ))}
             </ul>
+            
         </div>
     );
 };
