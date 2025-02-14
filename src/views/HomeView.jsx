@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Profiler } from 'react';
 import ServiceList from '../components/ServiceList'
 import HospitalInfo from '../components/HospitalInfo';
+import AppMainLayout from '../layouts/AppMainLayout';
 
 const HomeView = () => {
     const [services, setServices] = useState([]);
@@ -26,12 +27,14 @@ const HomeView = () => {
     if (error) return <h3>{`Error al cargar los datos: ${error}`}</h3>;
     
     return (
-        <Profiler id="homeViewProfiler" onRender={onRenderCallback}>
-            <React.Fragment>
-                <HospitalInfo />
-                <ServiceList services={services} />
-            </React.Fragment>
-        </Profiler>
+        <AppMainLayout>
+            <Profiler id="homeViewProfiler" onRender={onRenderCallback}>
+                <React.Fragment>
+                    <HospitalInfo />
+                    <ServiceList services={services} />
+                </React.Fragment>
+            </Profiler>
+        </AppMainLayout>
     );   
 };
 
