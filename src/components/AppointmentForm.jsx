@@ -28,6 +28,12 @@ const AppointmentForm = () => {
         return true;
     }
 
+    const sanitizeInput = (input) => {
+        const div = document.createElement("div");
+        div.innerText = input;
+        return div.innerHTML;
+    };
+
     return (
         <div className='card mt-5' id="contact">
             <h2>Reserva de hora médica</h2>

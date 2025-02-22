@@ -1,8 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
-const ROLE_ADMIN = "admin";
-
 const AppMainLayout = ({ children }) => {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
@@ -15,8 +13,20 @@ const AppMainLayout = ({ children }) => {
                         <a className="navbar-brand" href="#home">⚕️ Hospital San Itario</a>
                         <div className="collapse navbar-collapse" id="navbarNav">
                             <ul className="navbar-nav">
-                                {user && <li className="nav-item nav-link"><Link to="/"><span className="nav-text">Inicio</span></Link></li>}
-                                {user && <li className="nav-item nav-link"><Link to="/staff"><span className="nav-text">Médicos</span></Link></li>}
+                                {user && 
+                                    <li className="nav-item nav-link">
+                                        <Link to="/">
+                                            <span className="nav-text">Inicio</span>
+                                        </Link>
+                                    </li>
+                                }
+                                {user && 
+                                    <li className="nav-item nav-link">
+                                        <Link to="/staff">
+                                            <span className="nav-text">Médicos</span>
+                                        </Link>
+                                    </li>
+                                }
                             </ul>
                         </div>
                     </div>

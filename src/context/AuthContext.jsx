@@ -1,6 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { decryptData, encryptData } from "../utils/encryption";
 
+const SESSION_DURATION_IN_MINUTES = 30;
+const MILLIS_PER_MINUTE = 60 * 1000;
 const KEY_HOSPITAL_USER = "hospital_user";
 const AuthContext = createContext();
 
@@ -17,7 +19,8 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     const login = (role) => {
-        const userData = { role };
+        const expiresOn = new Date(Date.now() + (SESSION_DURATION_IN_MINUTES * MILLIS_PER_MINUTE));
+        const userData = { role, expiresOn };
         setUser(userData);
         const encryptedUser = encryptData(userData);
         localStorage.setItem(KEY_HOSPITAL_USER, encryptedUser);
@@ -27,7 +30,7 @@ export const AuthProvider = ({ children }) => {
         setUser(null);
         localStorage.removeItem(KEY_HOSPITAL_USER);
     }
-  
+
     const value = { user, login, logout, isAuthenticated: !!user, }
 
     return (
