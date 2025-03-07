@@ -74,3 +74,6 @@ Se implementó el uso del `Profiler` en los componentes que procesan las listas 
 ### Comprobación de Tipos con PropTypes
 Se comprueban los tipos de datos tal como se hizo con la tarea anterior, lo cual implica que se imprime un mensaje de error en la consola en caso de encontrar un error de datos relativo a PropTypes.
 
+## Ejercicio práctico Nº1 - Módulo 5
+### Uso de Axios para peticiones a la API
+Para el desarrollo del ejercicio práctico, se seleccionó Axios en desmedro de Fetch API, debido a su mayor simplicidad en su uso, lo cual conlleva tener un código más limpio y legible. Además, en los entornos de desarrollo modernos se encuentra más masificado el uso de Axios por sobre otras opciones tales como Fetch API.
