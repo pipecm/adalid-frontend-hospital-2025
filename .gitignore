@@ -24,3 +24,5 @@ dist-ssr
 *.sw?
 
 deliveries
+
+package-lock.json

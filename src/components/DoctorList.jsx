@@ -8,7 +8,7 @@ export default function DoctorList({ doctors }) {
             <h2>Equipo médico</h2>
             <ul className="services-list">
                 {doctors.map(doctor => (
-                    <li key={doctor.id}>
+                    <li key={parseInt(doctor.id)}>
                         <DoctorCard doctor={doctor} />
                     </li>
                 ))}
@@ -19,7 +19,7 @@ export default function DoctorList({ doctors }) {
 
 DoctorList.propTypes = {
     doctors: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.number.isRequired,
+        id: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
         imageUrl: PropTypes.string.isRequired,
         specialty: PropTypes.string.isRequired,
