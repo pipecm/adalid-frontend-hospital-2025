@@ -8,7 +8,7 @@ export default function ServiceList({ services }) {
             <h2>Servicios</h2>
             <ul className="services-list">
                 {services.map(service => (
-                    <li key={parseInt(service.id)}>
+                    <li key={service.id}>
                       <ServiceCard service={service}/>
                     </li>
                 ))}
@@ -19,7 +19,7 @@ export default function ServiceList({ services }) {
 
 ServiceList.propTypes = {
     services: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.string.isRequired,
+        id: PropTypes.number.isRequired,
         name: PropTypes.string.isRequired,
         imageUrl: PropTypes.string.isRequired,
         description: PropTypes.string.isRequired

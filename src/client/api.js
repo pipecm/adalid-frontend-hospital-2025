@@ -1,17 +1,42 @@
 import axios from "axios";
-import { decryptData } from "../utils/encryption";
+import { decryptData, decryptInput } from "../utils/encryption";
 import TokenError from "../errors/TokenError"
+import { removeQuotes } from "../utils/functions";
 
 const API_URL = "http://localhost:3001";
+
+export const findUserByUsername = async (username) => {
+    const users = await axios.get(`${API_URL + "/users"}`);
+    return users.data.find(user => removeQuotes(decryptInput(user.username)) === decryptInput(username));
+};
 
 export const getDoctors = async (token, user) => {
     let doctors = await getData("/doctors", token, user);
     return doctors;
 };
 
+export const findDoctorByUsername = async (token, user) => {
+    let doctors = await getDoctors(token, user);
+    return doctors.find(doctor => doctor.username === removeQuotes(decryptInput(user.username)));
+};
+
 export const getServices = async (token, user) => {
     let services = await getData("/services", token, user);
     return services;
+};
+
+export const createAppointment = async (appt) => {
+    try {
+        const response = await axios.post(`${API_URL + "/appointments"}`, appt, {
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.log(`Error al agendar cita:`, error);
+    }
 };
 
 const validateToken = (token, user) => {

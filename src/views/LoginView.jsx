@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useState } from "react";
 import AppMainLayout from "../layouts/AppMainLayout";
+import { sanitizeAndEncrypt } from "../utils/functions";
 
 const LoginView = () => {
     const [username, setUsername] = useState(undefined);
@@ -9,16 +10,30 @@ const LoginView = () => {
     const { login } = useAuth();
     const navigate = useNavigate();
 
-    const processLogin = (e) => {
-        e.preventDefault();
-        if (username === "admin" && password === "password") {
-            login("admin");
-            navigate("/");
-        } else if (username === "user" && password === "password") {
-            login("user");
-            navigate("/");
-        } else {
-            alert("Credenciales incorrectas");
+    const processLogin = async (event) => {
+        try {
+            event.preventDefault();
+            const encodedUsername = sanitizeAndEncrypt(username);
+            const encodedPassword = sanitizeAndEncrypt(password);
+
+            const userFound = await login(encodedUsername, encodedPassword);
+            if (userFound) {
+                console.log(`Role: ${userFound.role}`);
+                switch (userFound.role) {
+                    case "user":
+                        navigate("/");
+                        break;
+                    case "doctor":
+                        navigate("/doctor");
+                        break;
+                    default:
+                        alert("Rol no válido");
+                        navigate("/login");
+                        break;
+                }
+            }
+        } catch (error) {
+            alert(error.message);
         }
     };
 

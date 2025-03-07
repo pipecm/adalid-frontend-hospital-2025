@@ -27,10 +27,17 @@ const AppMainLayout = ({ children }) => {
                                         </Link>
                                     </li>
                                 }
+                                {user && (user['role'] === "doctor") &&
+                                    <li className="nav-item nav-link">
+                                        <Link to="/doctor">
+                                            <span className="nav-text">Perfil</span>
+                                        </Link>
+                                    </li>
+                                }
                             </ul>
                         </div>
                     </div>
-                    {user && <button onClick={() => navigate("/appointments")} className="btn btn-primary btn-menu">Agendar cita</button>}
+                    {user && (user['role'] === "user") && <button onClick={() => navigate("/appointments")} className="btn btn-primary btn-menu">Agendar cita</button>}
                     {user && <button onClick={logout} className="btn btn-primary btn-menu">Cerrar Sesión</button>}
                 </nav>
             </header>

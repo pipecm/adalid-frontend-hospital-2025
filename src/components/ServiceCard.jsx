@@ -13,7 +13,7 @@ export default function ServiceCard({ service }) {
     const ServiceComponent = withPhoto(ShowInfoComponent);
 
     return (
-        <React.Fragment key={parseInt(service.id)}>
+        <React.Fragment key={service.id}>
             <img src={service.imageUrl} className="service__img" alt={service.name} />
             <div className="card-body">
                 <h5 className="service__department">{service.name}</h5>
@@ -30,7 +30,7 @@ export default function ServiceCard({ service }) {
 
 ServiceCard.propTypes = {
     service: PropTypes.shape({
-      id: PropTypes.string.isRequired,
+      id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
       imageUrl: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired

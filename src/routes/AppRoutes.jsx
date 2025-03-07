@@ -5,6 +5,7 @@ import StaffView from "../views/StaffView"
 import AppointmentView from "../views/AppointmentView"
 import LoginView from "../views/LoginView";
 import ProtectedRoute from './ProtectedRoute';
+import DoctorProfileView from "../views/DoctorProfileView";
 
 const AppRoutes = () => {
     return (
@@ -13,20 +14,26 @@ const AppRoutes = () => {
 				<Routes>
 					<Route path="/login" element={<LoginView />}></Route>
 					<Route path="/" element={
-						<ProtectedRoute allowedRoles={["admin", "user"]}>
+						<ProtectedRoute allowedRoles={["user", "doctor"]}>
 							<HomeView />
 						</ProtectedRoute>
 					}>
 					</Route>
 					<Route path="/staff" element={
-						<ProtectedRoute allowedRoles={["admin", "user"]}>
+						<ProtectedRoute allowedRoles={["user", "doctor"]}>
 							<StaffView />
 						</ProtectedRoute>
 					}>
 					</Route>
 					<Route path="/appointments" element={
-						<ProtectedRoute allowedRoles={["admin", "user"]}>
+						<ProtectedRoute allowedRoles={["user"]}>
 							<AppointmentView />
+						</ProtectedRoute>
+					}>
+					</Route>
+					<Route path="/doctor" element={
+						<ProtectedRoute allowedRoles={["doctor"]}>
+							<DoctorProfileView />
 						</ProtectedRoute>
 					}>
 					</Route>

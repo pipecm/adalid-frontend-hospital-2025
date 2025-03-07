@@ -13,7 +13,7 @@ export default function DoctorCard({ doctor }) {
     const DoctorComponent = withPhoto(ShowInfoComponent);
 
     return (
-        <React.Fragment key={parseInt(doctor.id)}>
+        <React.Fragment key={doctor.id}>
             <img src={doctor.imageUrl} className="service__img" alt={doctor.name} />
             <div className="card-body">
                 <h5 className="service__department">{doctor.name}</h5>
@@ -31,7 +31,7 @@ export default function DoctorCard({ doctor }) {
 
 DoctorCard.propTypes = {
     doctor: PropTypes.shape({
-        id: PropTypes.string.isRequired,
+        id: PropTypes.number.isRequired,
         name: PropTypes.string.isRequired,
         imageUrl: PropTypes.string.isRequired,
         specialty: PropTypes.string.isRequired,

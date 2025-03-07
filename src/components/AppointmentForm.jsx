@@ -1,18 +1,28 @@
 import { useState } from "react";
 import Modal from "./Modal";
+import { createAppointment } from "../client/api";
+import { sanitizeAndEncrypt } from "../utils/functions";
 
 const AppointmentForm = () => {
-    const [name, setName] = useState(null);
+    const [patient, setPatient] = useState(null);
     const [email, setEmail] = useState(null);
     const [specialty, setSpecialty] = useState(null);
     const [message, setMessage] = useState(null);
     const [submitted, setSubmitted] = useState(false);
     const [hasError, setHasError] = useState(false);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        let data = { name, email, specialty, message };
+        let data = { 
+            patient: sanitizeAndEncrypt(patient), 
+            email: sanitizeAndEncrypt(email), 
+            specialty: sanitizeAndEncrypt(specialty), 
+            message: sanitizeAndEncrypt(message)
+        };
+
         if (isValid(data)) {
+            const response = await createAppointment(data);
+            console.log(`Response: ${response}`);
             setSubmitted(true);
         } else {
             setHasError(true);
@@ -28,19 +38,13 @@ const AppointmentForm = () => {
         return true;
     }
 
-    const sanitizeInput = (input) => {
-        const div = document.createElement("div");
-        div.innerText = input;
-        return div.innerHTML;
-    };
-
     return (
         <div className='card mt-5' id="contact">
             <h2>Reserva de hora médica</h2>
             <div className="card-body">
                 <form className="contact-form" onSubmit={handleSubmit}>
                     <div className="mb-3">
-                        <input type="text" id="name" className="form-control" placeholder="Nombre" onChange={e => setName(e.target.value)} autoFocus />
+                        <input type="text" id="patient" className="form-control" placeholder="Nombre" onChange={e => setPatient(e.target.value)} autoFocus />
                     </div>
                     <div className="mb-3">
                         <input type="email" id="email" className="form-control" placeholder="Email" onChange={e => setEmail(e.target.value)}/>
