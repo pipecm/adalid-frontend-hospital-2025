@@ -22,12 +22,18 @@ cd adalid-frontend-hospital-2025
 npm install
 ```
 
-4. Ejecutar el comando para levantar localmente el sitio web:
+4. Ejecutar el comando para levantar localmente el servidor que provee de un entorno backend con `json-server`:
+```
+npm run server
+```
+Una vez levantado el servidor, éste se encontrará disponible en `http://localhost:3001`.
+
+5. Ejecutar el comando para levantar localmente el sitio web:
 ```
 npm run dev
 ```
 
-5. Abrir un browser y acceder al sitio del hospital por medio de la siguiente URL:
+6. Abrir un browser y acceder al sitio del hospital por medio de la siguiente URL:
 ```
 http://localhost:5173
 ```
@@ -77,3 +83,33 @@ Se comprueban los tipos de datos tal como se hizo con la tarea anterior, lo cual
 ## Ejercicio práctico Nº1 - Módulo 5
 ### Uso de Axios para peticiones a la API
 Para el desarrollo del ejercicio práctico, se seleccionó Axios en desmedro de Fetch API, debido a su mayor simplicidad en su uso, lo cual conlleva tener un código más limpio y legible. Además, en los entornos de desarrollo modernos se encuentra más masificado el uso de Axios por sobre otras opciones tales como Fetch API.
+
+## Ejercicio práctico Nº2 - Módulo 5
+### Lista de usuarios y roles
+Para acceder al sitio web del hospital se crearon dos usuarios con roles diferentes:
+* **User**: Usuario que puede agendar citas médicas en el sitio web
+* **Doctor**: Usuario que puede ver su página de perfil al ingresar al sitio, pero que no puede agendar citas.
+
+|Usuario|Clave|Rol| 
+|---|---|---|
+|user|password|user|
+|jack|password|doctor|
+
+### Protección de rutas con React Router DOM
+Para la protección de las rutas que requieren roles específicos, se usó React Router para gestionar esta faceta del sitio web.
+
+### Implementación de Autenticación de Usuarios y Roles
+Los usuarios mencionados más arriba se almacenan encriptados en el archivo `db.json`. La autenticación se maneja en `AuthContext`, en donde consulta si el usuario existe en la base de datos y luego compara las contraseñas desencriptadas para otorgar o negar el acceso al sitio.
+
+### Consumo de APIs Protegido con API Key y JWT
+Para consumir la API levantada con `json-server` se validan los token JWT del usuario que efectúa la petición y el usuario logeado, de manera que sólo se permita la operación si los tokens son idénticos. En caso contrario, se redirige hacia la pantalla de login para ingresar nuevamente.
+
+### Prevención de Vulnerabilidades Comunes
+Para la prevención de vulnerabilidades se implementó la sanitización de los campos ingresados por el usuario, de manera de prevenir ataques del tipo XSS y/o inyección SQL. Asimismo, se configuró el header `"X-Frame-Options": "DENY"` para prevenir su incrustación en iframes inadecuados.
+
+### Encriptación de Datos en el Front-End
+Para las operaciones de login y de agendamiento de citas se procedió a encriptar los datos enviados al API. En el caso del login, el usuario y la clave son desencriptados sólo al momento de comparar los datos enviados por el usuario contra los datos provenientes de la API, para otorgar o negar el acceso, según sea necesario. Para el agendamiento de citas, de momento la información se guarda encriptada en la base de datos montada por el servidor provisto por `json-server`.
+
+
+## Copyright
+© 2025 Hospital San Itario. Todos los derechos reservados.

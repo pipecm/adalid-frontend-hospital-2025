@@ -25,8 +25,9 @@ export const getServices = async (token, user) => {
     return services;
 };
 
-export const createAppointment = async (appt) => {
+export const createAppointment = async (token, user, appt) => {
     try {
+        validateToken(token, user);
         const response = await axios.post(`${API_URL + "/appointments"}`, appt, {
             headers: {
               'Content-Type': 'application/json',
