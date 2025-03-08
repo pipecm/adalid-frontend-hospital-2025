@@ -13,7 +13,7 @@ const HospitalInfo = () => {
                 <div className="values__card card text-bg-success mb-3">
                     <div className="card-body">
                         <h5 className="card-title">Visión</h5>
-                        <p className="card-text">Nuestra visión es ser reconocido como uno de los centros médicos de mayor prestigio de la ciudad y del país.</p>
+                        <p className="card-text">Nuestra visión es ser reconocido  por la comunidad en general como uno de los centros médicos de mayor prestigio de la ciudad y del país.</p>
                     </div>
                 </div>
             </div>

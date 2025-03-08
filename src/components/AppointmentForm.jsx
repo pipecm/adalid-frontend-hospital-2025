@@ -1,19 +1,46 @@
 import { useState } from "react";
 import Modal from "./Modal";
+import { createAppointment } from "../client/api";
+import { sanitizeAndEncrypt } from "../utils/functions";
+import TokenError from '../errors/TokenError';
+import { useAuth } from "../context/AuthContext";
+
+const KEY_HOSPITAL_USER = "hospital_user";
 
 const AppointmentForm = () => {
-    const [name, setName] = useState(null);
+    const [patient, setPatient] = useState(null);
     const [email, setEmail] = useState(null);
     const [specialty, setSpecialty] = useState(null);
     const [message, setMessage] = useState(null);
     const [submitted, setSubmitted] = useState(false);
     const [hasError, setHasError] = useState(false);
 
-    const handleSubmit = (e) => {
+    const { user: authenticatedUser, logout } = useAuth();
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        let data = { name, email, specialty, message };
+        const currentUser = localStorage.getItem(KEY_HOSPITAL_USER);
+
+        let data = { 
+            patient: sanitizeAndEncrypt(patient), 
+            email: sanitizeAndEncrypt(email), 
+            specialty: sanitizeAndEncrypt(specialty), 
+            message: sanitizeAndEncrypt(message)
+        };
+
         if (isValid(data)) {
-            setSubmitted(true);
+            try {
+                const response = await createAppointment(currentUser, authenticatedUser, data);
+                console.log(`Response: ${response}`);
+                setSubmitted(true);
+            } catch (error) {
+                if (error instanceof TokenError) {
+                    alert(error.message);
+                    logout();
+                } else {
+                    setHasError(true);
+                }
+            }
         } else {
             setHasError(true);
         }
@@ -28,13 +55,18 @@ const AppointmentForm = () => {
         return true;
     }
 
+    const cleanForm = () => {
+        document.getElementById("appointment-form").reset();
+        setSubmitted(false);
+    };
+
     return (
         <div className='card mt-5' id="contact">
             <h2>Reserva de hora médica</h2>
             <div className="card-body">
-                <form className="contact-form" onSubmit={handleSubmit}>
+                <form id="appointment-form" className="contact-form" onSubmit={handleSubmit}>
                     <div className="mb-3">
-                        <input type="text" id="name" className="form-control" placeholder="Nombre" onChange={e => setName(e.target.value)} autoFocus />
+                        <input type="text" id="patient" className="form-control" placeholder="Nombre" onChange={e => setPatient(e.target.value)} autoFocus />
                     </div>
                     <div className="mb-3">
                         <input type="email" id="email" className="form-control" placeholder="Email" onChange={e => setEmail(e.target.value)}/>
@@ -50,7 +82,7 @@ const AppointmentForm = () => {
             </div>
             <div className="card-body">
                 {submitted && (
-                    <Modal onClose={() => setSubmitted(false)}>
+                    <Modal onClose={() => cleanForm()}>
                         <img className="modal-icon" src="../../images/icon_ok.svg" alt="OK" />
                         <h4>Cita agendada exitosamente</h4>
                     </Modal>

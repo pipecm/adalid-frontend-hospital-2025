@@ -99,3 +99,25 @@
     background-color: dodgerblue;
     color: white;
 }
+
+.nav-text {
+    color: white;
+    text-decoration: none;
+}
+
+.card-form {
+    width: 30rem;
+    padding: 2rem;
+    margin: 2rem;
+}
+
+.form-element {
+    width: 20rem;
+    padding: 2rem;
+}
+
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

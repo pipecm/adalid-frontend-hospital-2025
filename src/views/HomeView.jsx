@@ -1,12 +1,18 @@
 import React, { useState, useEffect, Profiler } from 'react';
 import ServiceList from '../components/ServiceList'
 import HospitalInfo from '../components/HospitalInfo';
-import { findAllServices } from '../client/ApiClient';
+import AppMainLayout from '../layouts/AppMainLayout';
+import { getServices } from '../client/api';
+import { useAuth } from '../context/AuthContext';
+import TokenError from '../errors/TokenError';
+
+const KEY_HOSPITAL_USER = "hospital_user";
 
 const HomeView = () => {
     const [services, setServices] = useState([]);
     const [error, setError] = useState(null);
     const [reloaded, setReloaded] = useState(false);
+    const { user: authenticatedUser, logout } = useAuth();
 
     const onRenderCallback = (id, phase, actualDuration) => {
 		console.log(`${id} (${phase}) tomó ${actualDuration} ms para renderizar`);
@@ -26,10 +32,16 @@ const HomeView = () => {
     useEffect(() => {
         const fetchServices = async () => {
             try {
-                let response = await findAllServices();
+                const currentUser = localStorage.getItem(KEY_HOSPITAL_USER);
+                let response = await getServices(currentUser, authenticatedUser);
                 setServices(shuffle(response));
             } catch(error) {
-                setError(error);
+                if (error instanceof TokenError) {
+                    alert(error.message);
+                    logout();
+                } else {
+                    setError(error);
+                }
             }
         }
 
@@ -48,13 +60,14 @@ const HomeView = () => {
     if (!services) return <h3>Cargando...</h3>;
     
     return (
-        <Profiler id="homeViewProfiler" onRender={onRenderCallback}>
-            <React.Fragment>
-                <HospitalInfo />
-                <ServiceList services={services} />
-                <button className="btn btn-primary" onClick={reload}>Recargar vista</button>
-            </React.Fragment>
-        </Profiler>
+        <AppMainLayout>
+            <Profiler id="homeViewProfiler" onRender={onRenderCallback}>
+                <React.Fragment>
+                    <HospitalInfo />
+                    <ServiceList services={services} />
+                </React.Fragment>
+            </Profiler>
+        </AppMainLayout>
     );   
 };
 

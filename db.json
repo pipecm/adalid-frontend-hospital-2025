@@ -1,0 +1,96 @@
+{
+  "doctors": [
+    {
+      "id": "1",
+      "name": "Jack Johnson",
+      "imageUrl": "../../images/medico_01.jpg",
+      "specialty": "Medicina General",
+      "experience": "Vasta experiencia como médico general, más de 10 años trabajando para nuestro hospital",
+      "yearsOfExperience": 10,
+      "username": "jack"
+    },
+    {
+      "id": "2",
+      "name": "Kenny Bell",
+      "imageUrl": "../../images/medico_02.jpg",
+      "specialty": "Oftalmología",
+      "experience": "Experto en el tratamiento de miopía y astigmatismo",
+      "yearsOfExperience": 4,
+      "username": "kenny"
+    },
+    {
+      "id": "3",
+      "name": "Elsa Karina",
+      "imageUrl": "../../images/medico_03.jpg",
+      "specialty": "Traumatología",
+      "experience": "Especialista en el tratamiento de lesiones musculares",
+      "yearsOfExperience": 5,
+      "username": "elsa"
+    },
+    {
+      "id": "4",
+      "name": "Paz Guerra",
+      "imageUrl": "../../images/medico_04.webp",
+      "specialty": "Cardiología",
+      "experience": "Experimentada en el tratamiento de afecciones al corazón",
+      "yearsOfExperience": 8,
+      "username": "paz"
+    }
+  ],
+  "services": [
+    {
+      "id": "1",
+      "name": "Urgencias",
+      "description": "Atención rápida, inmediata y eficiente según las necesidades del paciente",
+      "imageUrl": "../../images/urgency.webp"
+    },
+    {
+      "id": "2",
+      "name": "Laboratorio clínico",
+      "description": "Realizamos más de 50 tipos de exámenes médicos, usando tecnología de última generación",
+      "imageUrl": "../../images/laboratory.webp"
+    },
+    {
+      "id": "3",
+      "name": "Maternidad",
+      "description": "Contamos con la más moderna infraestructura para recibir al nuevo miembro de su familia.",
+      "imageUrl": "../../images/maternity.jpg"
+    },
+    {
+      "id": "4",
+      "name": "Imagenología",
+      "description": "Exámenes de radiología, ecografía, resonancia magnética y otros",
+      "imageUrl": "../../images/radiology.jpg"
+    }
+  ],
+  "appointments": [
+    {
+      "id": "1",
+      "patient": "Juan",
+      "email": "juan@mail.com",
+      "specialty": "Oftalmología",
+      "message": "Buenos días, necesito hora para control"
+    },
+    {
+      "id": "2",
+      "patient": "Pedro",
+      "email": "pedro@mail.com",
+      "specialty": "Urología",
+      "message": "Buenas tardes, quiero agendar una hora con un urólogo"
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "username": "U2FsdGVkX1/DB8AKXbIzv/IKHn6pgYQDU2q0zovG3j8=",
+      "password": "U2FsdGVkX19zrJkj558A/7mR5HcB736MMwSMvKbk5uE=",
+      "role": "user"
+    },
+    {
+      "id": "2",
+      "username": "U2FsdGVkX1+/qTRVX9Cc0KAO3AoaC9Tam6OhNcFwlXs=",
+      "password": "U2FsdGVkX18MR9ic14UuRwRCQJ2cmULErCeQjyXkRJY=",
+      "role": "doctor"
+    }
+  ]
+}
