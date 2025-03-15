@@ -3,8 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import AppMainLayout from '../layouts/AppMainLayout'
 import { findDoctorByUsername } from '../client/api';
 import TokenError from '../errors/TokenError';
-
-const KEY_HOSPITAL_USER = "hospital_user";
+import { getStoredUser } from '../utils/functions';
 
 const DoctorProfileView = () => {
     const [doctor, setDoctor] = useState(undefined);
@@ -14,7 +13,7 @@ const DoctorProfileView = () => {
     useEffect(() => {
         const retrieveDoctor = async () => {
             try {
-                const currentUser = localStorage.getItem(KEY_HOSPITAL_USER);
+                const currentUser = getStoredUser();
                 const doctorFound = await findDoctorByUsername(currentUser, authenticatedUser);
                 setDoctor(doctorFound);
             } catch (error) {

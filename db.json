@@ -82,15 +82,22 @@
   "users": [
     {
       "id": "1",
-      "username": "U2FsdGVkX1/DB8AKXbIzv/IKHn6pgYQDU2q0zovG3j8=",
+      "email": "U2FsdGVkX1/DB8AKXbIzv/IKHn6pgYQDU2q0zovG3j8=",
       "password": "U2FsdGVkX19zrJkj558A/7mR5HcB736MMwSMvKbk5uE=",
       "role": "user"
     },
     {
       "id": "2",
-      "username": "U2FsdGVkX1+/qTRVX9Cc0KAO3AoaC9Tam6OhNcFwlXs=",
+      "email": "U2FsdGVkX1+/qTRVX9Cc0KAO3AoaC9Tam6OhNcFwlXs=",
       "password": "U2FsdGVkX18MR9ic14UuRwRCQJ2cmULErCeQjyXkRJY=",
       "role": "doctor"
+    },
+    {
+      "id": "65ba",
+      "name": "U2FsdGVkX1+ZbBbdeatg3peiZWooa/Ly/gd+2mWZ4lI=",
+      "email": "U2FsdGVkX18tFaJmmL34Ngl2X5tBkdPa8v8zvHEHapxDS1TZV/dL68R0qwseDPSA",
+      "password": "U2FsdGVkX1+KR382ul3RqvOia3dCxFVyIIu2KsnyOk4=",
+      "role": "U2FsdGVkX18JlO4RwrazdawBA/2+sW7jr2sEux1whu8="
     }
   ]
 }

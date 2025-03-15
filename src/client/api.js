@@ -25,6 +25,20 @@ export const getServices = async (token, user) => {
     return services;
 };
 
+export const createUser = async (newUser) => {
+    try {
+        const response = await axios.post(`${API_URL + "/users"}`, newUser, {
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.log(`Error al crear usuario:`, error);
+    }
+}
+
 export const createAppointment = async (token, user, appt) => {
     try {
         validateToken(token, user);

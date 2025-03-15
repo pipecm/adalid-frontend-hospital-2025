@@ -37,6 +37,8 @@ const AppMainLayout = ({ children }) => {
                             </ul>
                         </div>
                     </div>
+                    {!user && <button onClick={() => navigate("/patient-signup")} className="btn btn-primary btn-menu">Registro</button>}
+                    {!user && <button onClick={() => navigate("/login")} className="btn btn-primary btn-menu">Login</button>}
                     {user && (user['role'] === "user") && <button onClick={() => navigate("/appointments")} className="btn btn-primary btn-menu">Agendar cita</button>}
                     {user && <button onClick={logout} className="btn btn-primary btn-menu">Cerrar Sesión</button>}
                 </nav>

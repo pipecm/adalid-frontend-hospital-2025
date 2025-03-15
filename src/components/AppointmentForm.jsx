@@ -1,11 +1,9 @@
 import { useState } from "react";
 import Modal from "./Modal";
 import { createAppointment } from "../client/api";
-import { sanitizeAndEncrypt } from "../utils/functions";
+import { getStoredUser, sanitizeAndEncrypt } from "../utils/functions";
 import TokenError from '../errors/TokenError';
 import { useAuth } from "../context/AuthContext";
-
-const KEY_HOSPITAL_USER = "hospital_user";
 
 const AppointmentForm = () => {
     const [patient, setPatient] = useState(null);
@@ -19,7 +17,7 @@ const AppointmentForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const currentUser = localStorage.getItem(KEY_HOSPITAL_USER);
+        const currentUser = getStoredUser();
 
         let data = { 
             patient: sanitizeAndEncrypt(patient), 

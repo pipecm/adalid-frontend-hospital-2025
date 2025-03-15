@@ -18,7 +18,6 @@ const LoginView = () => {
 
             const userFound = await login(encodedUsername, encodedPassword);
             if (userFound) {
-                console.log(`Role: ${userFound.role}`);
                 switch (userFound.role) {
                     case "user":
                         navigate("/");
