@@ -6,12 +6,14 @@ import { getServices } from '../client/api';
 import { useAuth } from '../context/AuthContext';
 import TokenError from '../errors/TokenError';
 import { getStoredUser, shuffleList } from '../utils/functions';
+import { useNavigate } from 'react-router-dom';
 
 const HomeView = () => {
     const [services, setServices] = useState([]);
     const [error, setError] = useState(null);
     const [reloaded, setReloaded] = useState(false);
     const { user: authenticatedUser, logout } = useAuth();
+    const navigate = useNavigate();
 
     const onRenderCallback = (id, phase, actualDuration) => {
 		console.log(`${id} (${phase}) tomó ${actualDuration} ms para renderizar`);
@@ -32,6 +34,7 @@ const HomeView = () => {
                 if (error instanceof TokenError) {
                     alert(error.message);
                     logout();
+                    navigate("/login");
                 } else {
                     setError(error);
                 }

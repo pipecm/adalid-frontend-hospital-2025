@@ -29,7 +29,6 @@ export const shuffleList = (list) => {
 export const validateEmptyFields = (data) => {
     let errors = {};
     for (let key in data) {
-        console.log(`${key} : ${data[key]}`)
         if (!data[key]) {
             errors[key] = `El campo ${key} no puede estar vacío`;
         }

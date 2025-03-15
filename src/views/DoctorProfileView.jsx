@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import AppMainLayout from '../layouts/AppMainLayout'
-import { findDoctorByUsername } from '../client/api';
+import { findDoctorByEmail } from '../client/api';
 import TokenError from '../errors/TokenError';
 import { getStoredUser } from '../utils/functions';
 
@@ -14,7 +14,7 @@ const DoctorProfileView = () => {
         const retrieveDoctor = async () => {
             try {
                 const currentUser = getStoredUser();
-                const doctorFound = await findDoctorByUsername(currentUser, authenticatedUser);
+                const doctorFound = await findDoctorByEmail(currentUser, authenticatedUser);
                 setDoctor(doctorFound);
             } catch (error) {
                 if (error instanceof TokenError) {

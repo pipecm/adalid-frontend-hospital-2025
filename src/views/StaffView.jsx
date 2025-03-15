@@ -4,6 +4,7 @@ import AppMainLayout from "../layouts/AppMainLayout";
 import { getDoctors } from "../client/api";
 import { useAuth } from "../context/AuthContext";
 import TokenError from "../errors/TokenError";
+import { useNavigate } from "react-router-dom";
 
 const KEY_HOSPITAL_USER = "hospital_user";
 
@@ -11,6 +12,7 @@ const StaffView = () => {
     const [doctors, setDoctors] = useState([]);
     const [error, setError] = useState(null);
     const { user: authenticatedUser, logout } = useAuth();
+    const navigate = useNavigate();
 
     const onRenderCallback = (id, phase, actualDuration) => {
 		console.log(`${id} (${phase}) tomó ${actualDuration} ms para renderizar`);
@@ -26,6 +28,7 @@ const StaffView = () => {
                 if (error instanceof TokenError) {
                     alert(error.message);
                     logout();
+                    navigate("/login");
                 } else {
                     setError(error);
                 }

@@ -1,57 +1,42 @@
 import { useState } from "react";
 import Modal from "./Modal";
 import { createAppointment } from "../client/api";
-import { getStoredUser, sanitizeAndEncrypt } from "../utils/functions";
-import TokenError from '../errors/TokenError';
+import { getStoredUser, validateEmptyFields } from "../utils/functions";
 import { useAuth } from "../context/AuthContext";
+import useForm from "../hooks/useForm";
 
 const AppointmentForm = () => {
-    const [patient, setPatient] = useState(null);
-    const [email, setEmail] = useState(null);
-    const [specialty, setSpecialty] = useState(null);
-    const [message, setMessage] = useState(null);
     const [submitted, setSubmitted] = useState(false);
-    const [hasError, setHasError] = useState(false);
+    const [submitError, setSubmitError] = useState(undefined);
 
-    const { user: authenticatedUser, logout } = useAuth();
+    const { user: authenticatedUser } = useAuth();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const validate = (values) => {
+        setSubmitted(true);
+        let validationErrors = validateEmptyFields(values);
+        return validationErrors;
+    };
+
+    const onSubmit = async (encryptedValues) => {
         const currentUser = getStoredUser();
 
-        let data = { 
-            patient: sanitizeAndEncrypt(patient), 
-            email: sanitizeAndEncrypt(email), 
-            specialty: sanitizeAndEncrypt(specialty), 
-            message: sanitizeAndEncrypt(message)
-        };
-
-        if (isValid(data)) {
-            try {
-                const response = await createAppointment(currentUser, authenticatedUser, data);
-                console.log(`Response: ${response}`);
-                setSubmitted(true);
-            } catch (error) {
-                if (error instanceof TokenError) {
-                    alert(error.message);
-                    logout();
-                } else {
-                    setHasError(true);
-                }
-            }
-        } else {
-            setHasError(true);
+        try {
+            const response = await createAppointment(currentUser, authenticatedUser, encryptedValues);
+            console.log(`Response: ${JSON.stringify(response)}`);
+            setSubmitError(undefined);
+            setSubmitted(true);
+        } catch (error) {
+            setSubmitError(`Error al crear cita médica: ${error.message}`);
         }
-    }
+    };
 
-    const isValid = (data) => {
-        for (let key in data) {
-            if (!data[key]) {
-                return false;
-            }
-        }
-        return true;
-    }
+    const { values, errors, handleChange, handleSubmit } = useForm(
+        { patient: authenticatedUser["name"], email: authenticatedUser["email"], specialty: "", message: "" }, validate, onSubmit
+    );
+
+    const hasError = () => {
+        return (Object.keys(errors).length > 0) || !!submitError;
+    };
 
     const cleanForm = () => {
         document.getElementById("appointment-form").reset();
@@ -64,31 +49,35 @@ const AppointmentForm = () => {
             <div className="card-body">
                 <form id="appointment-form" className="contact-form" onSubmit={handleSubmit}>
                     <div className="mb-3">
-                        <input type="text" id="patient" className="form-control" placeholder="Nombre" onChange={e => setPatient(e.target.value)} autoFocus />
+                        <input type="text" id="patient" className="form-control" placeholder="Nombre" value={values.patient} disabled/>
                     </div>
                     <div className="mb-3">
-                        <input type="email" id="email" className="form-control" placeholder="Email" onChange={e => setEmail(e.target.value)}/>
+                        <input type="email" id="email" className="form-control" placeholder="Email" value={values.email} disabled/>
                     </div>
                     <div className="mb-3">
-                        <input type="text" id="specialty" className="form-control" placeholder="Especialidad" onChange={e => setSpecialty(e.target.value)}/>
+                        <input type="text" id="specialty" className="form-control" placeholder="Especialidad" onChange={handleChange}/>
                     </div>
                     <div className="mb-3">
-                        <textarea rows="4" id="message" className="form-control" placeholder="Mensaje" onChange={e => setMessage(e.target.value)}/>
+                        <textarea rows="4" id="message" className="form-control" placeholder="Mensaje" onChange={handleChange}/>
                     </div>
                     <button type="submit" className="btn btn-primary">Enviar</button>
                 </form>
             </div>
             <div className="card-body">
-                {submitted && (
+                {submitted && !hasError() && (
                     <Modal onClose={() => cleanForm()}>
                         <img className="modal-icon" src="../../images/icon_ok.svg" alt="OK" />
                         <h4>Cita agendada exitosamente</h4>
                     </Modal>
                 )}
-                 {hasError && (
-                    <Modal onClose={() => setHasError(false)}>
+                 {submitted && hasError() && (
+                    <Modal onClose={() => setSubmitted(false)}>
                         <img className="modal-icon" src="../../images/icon_error.svg" alt="Error" />
                         <h4>Error al agendar</h4>
+                        <ul>
+                            {submitError && <li>{submitError}</li>}
+                            {Object.keys(errors).map(errorKey => <li key={errorKey}>{errors[errorKey]}</li>)}
+                        </ul>
                     </Modal>
                 )}
             </div>

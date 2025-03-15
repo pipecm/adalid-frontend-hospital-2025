@@ -7,7 +7,7 @@
       "specialty": "Medicina General",
       "experience": "Vasta experiencia como médico general, más de 10 años trabajando para nuestro hospital",
       "yearsOfExperience": 10,
-      "username": "jack"
+      "email": "U2FsdGVkX1+THS1ZgQ7Db1LOb9ZrjcmHv6sY0VtKLe4="
     },
     {
       "id": "2",
@@ -16,7 +16,7 @@
       "specialty": "Oftalmología",
       "experience": "Experto en el tratamiento de miopía y astigmatismo",
       "yearsOfExperience": 4,
-      "username": "kenny"
+      "email": "kenny@hsi.com"
     },
     {
       "id": "3",
@@ -25,7 +25,7 @@
       "specialty": "Traumatología",
       "experience": "Especialista en el tratamiento de lesiones musculares",
       "yearsOfExperience": 5,
-      "username": "elsa"
+      "email": "elsa@hsi.com"
     },
     {
       "id": "4",
@@ -34,7 +34,7 @@
       "specialty": "Cardiología",
       "experience": "Experimentada en el tratamiento de afecciones al corazón",
       "yearsOfExperience": 8,
-      "username": "paz"
+      "email": "paz@hsi.com"
     }
   ],
   "services": [
@@ -82,15 +82,17 @@
   "users": [
     {
       "id": "1",
-      "email": "U2FsdGVkX1/DB8AKXbIzv/IKHn6pgYQDU2q0zovG3j8=",
-      "password": "U2FsdGVkX19zrJkj558A/7mR5HcB736MMwSMvKbk5uE=",
-      "role": "user"
+      "name": "U2FsdGVkX18fw0wAjr4wRR3f4++H44yVa/dhF4Z575E=",
+      "email": "U2FsdGVkX19+hJOyXaSz6QLhncBVKSOFPkTBBYor+80=",
+      "password": "U2FsdGVkX18AsoPc/E+OPKc2o2GjRPj098w0sv6bfa0=",
+      "role": "U2FsdGVkX19vUwp14dNTO3F48D9Uw7K5t8JjwC33K0E="
     },
     {
       "id": "2",
-      "email": "U2FsdGVkX1+/qTRVX9Cc0KAO3AoaC9Tam6OhNcFwlXs=",
-      "password": "U2FsdGVkX18MR9ic14UuRwRCQJ2cmULErCeQjyXkRJY=",
-      "role": "doctor"
+      "name": "U2FsdGVkX19H/gz+L10l1j8CXVM1JdeWEStv25KGNnY=",
+      "email": "U2FsdGVkX1+THS1ZgQ7Db1LOb9ZrjcmHv6sY0VtKLe4=",
+      "password": "U2FsdGVkX1+1x55Z0CYoYgC7TvDWNKoARlTepCO0Q6s=",
+      "role": "U2FsdGVkX1/xOVInYbDSQeJVXG2eBTding0XNNhGYik="
     },
     {
       "id": "65ba",
