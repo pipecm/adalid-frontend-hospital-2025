@@ -1,79 +1,82 @@
 import { useState } from "react";
 import Modal from "./Modal";
-import { createAppointment } from "../client/api";
-import { getStoredUser, validateEmptyFields } from "../utils/functions";
-import { useAuth } from "../context/AuthContext";
 import useForm from "../hooks/useForm";
+import { validateEmptyFields } from "../utils/functions";
+import { useNavigate } from "react-router-dom";
+import { createUser } from "../client/api";
 
-const AppointmentForm = () => {
+const SignUpPatientForm = () => {
     const [submitted, setSubmitted] = useState(false);
+    const [confirmPwd, setConfirmPwd] = useState(undefined);
     const [submitError, setSubmitError] = useState(undefined);
-
-    const { user: authenticatedUser } = useAuth();
+ 
+    const navigate = useNavigate();
 
     const validate = (values) => {
         setSubmitted(true);
         let validationErrors = validateEmptyFields(values);
+        if (values.password != confirmPwd) {
+            validationErrors["password"] = "Las claves ingresadas no coinciden";
+        }
         return validationErrors;
     };
 
     const onSubmit = async (encryptedValues) => {
-        const currentUser = getStoredUser();
-
         try {
-            const response = await createAppointment(currentUser, authenticatedUser, encryptedValues);
+            const response = await createUser(encryptedValues);
             console.log(`Response: ${JSON.stringify(response)}`);
             setSubmitError(undefined);
             setSubmitted(true);
         } catch (error) {
-            setSubmitError(`Error al crear cita médica: ${error.message}`);
+            setSubmitError(`Error al crear usuario: ${error.message}`);
         }
     };
 
-    const { values, errors, handleChange, handleSubmit } = useForm(
-        { patient: authenticatedUser["name"], email: authenticatedUser["email"], specialty: "", message: "" }, validate, onSubmit
+    const { errors, handleChange, handleSubmit } = useForm(
+        { name: "", email: "", password: "", role: "patient" }, validate, onSubmit
     );
 
     const hasError = () => {
         return (Object.keys(errors).length > 0) || !!submitError;
     };
 
-    const cleanForm = () => {
-        document.getElementById("appointment-form").reset();
+    const redirectToLogin = () => {
+        document.getElementById("patient-form").reset();
         setSubmitted(false);
+        navigate("/login");
     };
-
+    
     return (
-        <div className='card mt-5' id="contact">
-            <h2>Reserva de hora médica</h2>
+        <div className='card mt-5' id="sign-up-patient">
+            <h2>Registro de Nuevo Paciente</h2>
             <div className="card-body">
-                <form id="appointment-form" className="contact-form" onSubmit={handleSubmit}>
+                <form id="patient-form" className="contact-form" onSubmit={handleSubmit}>
                     <div className="mb-3">
-                        <input type="text" id="patient" className="form-control" placeholder="Nombre" value={values.patient} disabled/>
+                        <input type="text" name="name" id="name" className="form-control" placeholder="Nombre" onChange={handleChange} autoFocus />
                     </div>
                     <div className="mb-3">
-                        <input type="email" id="email" className="form-control" placeholder="Email" value={values.email} disabled/>
+                        <input type="email" name="email" id="email" className="form-control" placeholder="Email" onChange={handleChange}/>
                     </div>
                     <div className="mb-3">
-                        <input type="text" id="specialty" className="form-control" placeholder="Especialidad" onChange={handleChange}/>
+                        <input type="password" name="password" id="password" className="form-control" placeholder="Clave" onChange={handleChange}/>
                     </div>
                     <div className="mb-3">
-                        <textarea rows="4" id="message" className="form-control" placeholder="Mensaje" onChange={handleChange}/>
+                        <input type="password" name="confirm-pwd" id="confirm-pwd" className="form-control" placeholder="Confirmar clave" onChange={(e) => setConfirmPwd(e.target.value)}/>
                     </div>
                     <button type="submit" className="btn btn-primary">Enviar</button>
                 </form>
             </div>
             <div className="card-body">
                 {submitted && !hasError() && (
-                    <Modal onClose={() => cleanForm()}>
+                    <Modal onClose={redirectToLogin}>
                         <img className="modal-icon" src="../../images/icon_ok.svg" alt="OK" />
-                        <h4>Cita agendada exitosamente</h4>
+                        <h4>Paciente registrado exitosamente</h4>
                     </Modal>
                 )}
-                 {submitted && hasError() && (
+                {submitted && hasError() && (
                     <Modal onClose={() => setSubmitted(false)}>
                         <img className="modal-icon" src="../../images/icon_error.svg" alt="Error" />
-                        <h4>Error al agendar</h4>
+                        <h4>Error al registrar paciente</h4>
                         <ul>
                             {submitError && <li>{submitError}</li>}
                             {Object.keys(errors).map(errorKey => <li key={errorKey}>{errors[errorKey]}</li>)}
@@ -85,4 +88,4 @@ const AppointmentForm = () => {
     );
 };
 
-export default AppointmentForm;
+export default SignUpPatientForm;

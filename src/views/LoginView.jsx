@@ -5,7 +5,7 @@ import AppMainLayout from "../layouts/AppMainLayout";
 import { sanitizeAndEncrypt } from "../utils/functions";
 
 const LoginView = () => {
-    const [username, setUsername] = useState(undefined);
+    const [email, setEmail] = useState(undefined);
     const [password, setPassword] = useState(undefined);
     const { login } = useAuth();
     const navigate = useNavigate();
@@ -13,14 +13,14 @@ const LoginView = () => {
     const processLogin = async (event) => {
         try {
             event.preventDefault();
-            const encodedUsername = sanitizeAndEncrypt(username);
+            const encodedEmail = sanitizeAndEncrypt(email);
             const encodedPassword = sanitizeAndEncrypt(password);
 
-            const userFound = await login(encodedUsername, encodedPassword);
+            const userFound = await login(encodedEmail, encodedPassword);
             if (userFound) {
-                console.log(`Role: ${userFound.role}`);
                 switch (userFound.role) {
-                    case "user":
+                    case "patient":
+                    case "admin":
                         navigate("/");
                         break;
                     case "doctor":
@@ -43,8 +43,8 @@ const LoginView = () => {
             <div className="form-container">
                 <div className="card card-form">
                     <form onSubmit={processLogin}>
-                        <input type="text" className="form-control form-element" id="username" placeholder="Usuario" 
-                                value={username} onChange={(e) => setUsername(e.target.value)}/>
+                        <input type="email" className="form-control form-element" id="email" placeholder="Email" 
+                                value={email} onChange={(e) => setEmail(e.target.value)}/>
                         <br />
                         <input type="password" className="form-control form-element" id="password" placeholder="Clave" 
                                 value={password} onChange={(e) => setPassword(e.target.value)}/>
@@ -55,7 +55,6 @@ const LoginView = () => {
             </div>
         </AppMainLayout>
       );
-
 };
 
 export default LoginView;

@@ -6,33 +6,36 @@ import AppointmentView from "../views/AppointmentView"
 import LoginView from "../views/LoginView";
 import ProtectedRoute from './ProtectedRoute';
 import DoctorProfileView from "../views/DoctorProfileView";
+import SignUpPatientView from "../views/SignUpPatientView";
 
 const AppRoutes = () => {
     return (
 		<AuthProvider>
 			<Router>
 				<Routes>
-					<Route path="/login" element={<LoginView />}></Route>
+					<Route path="/login" 			element={<LoginView />}>		</Route>
+					<Route path="/patient-signup" 	element={<SignUpPatientView />}></Route>
+
 					<Route path="/" element={
-						<ProtectedRoute allowedRoles={["user", "doctor"]}>
+						<ProtectedRoute allowedRoles={["patient", "doctor", "admin"]}>
 							<HomeView />
 						</ProtectedRoute>
 					}>
 					</Route>
 					<Route path="/staff" element={
-						<ProtectedRoute allowedRoles={["user", "doctor"]}>
+						<ProtectedRoute allowedRoles={["patient", "doctor", "admin"]}>
 							<StaffView />
 						</ProtectedRoute>
 					}>
 					</Route>
 					<Route path="/appointments" element={
-						<ProtectedRoute allowedRoles={["user"]}>
+						<ProtectedRoute allowedRoles={["patient", "admin"]}>
 							<AppointmentView />
 						</ProtectedRoute>
 					}>
 					</Route>
 					<Route path="/doctor" element={
-						<ProtectedRoute allowedRoles={["doctor"]}>
+						<ProtectedRoute allowedRoles={["doctor", "admin"]}>
 							<DoctorProfileView />
 						</ProtectedRoute>
 					}>

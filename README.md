@@ -110,6 +110,34 @@ Para la prevención de vulnerabilidades se implementó la sanitización de los c
 ### Encriptación de Datos en el Front-End
 Para las operaciones de login y de agendamiento de citas se procedió a encriptar los datos enviados al API. En el caso del login, el usuario y la clave son desencriptados sólo al momento de comparar los datos enviados por el usuario contra los datos provenientes de la API, para otorgar o negar el acceso, según sea necesario. Para el agendamiento de citas, de momento la información se guarda encriptada en la base de datos montada por el servidor provisto por `json-server`.
 
+## Ejercicio práctico Nº3 - Módulo 5
+
+### Cuentas de usuario
+
+|Email              |Clave          |Rol      | 
+|-------------------|---------------|---------|
+|pipecm@gmail.com   |12345          |patient  |
+|jack@hsi.com       |doctorjack     |doctor   |
+|admin@hsi.com      |adminhospital  |admin    |
+
+### Uso de useState para la Gestión de Estado
+El hook `useState` se utiliza prácticamente a lo largo de toda la aplicación, ya sea para manejar información de formularios como para la gestión de información proveniente de la API mostrada en pantalla, así como también para el manejo del componente `Modal`.
+
+### Uso de useEffect para la Gestión de Efectos Secundarios
+El hook `useEffect` se usa en las pantallas donde se muestra la lista de servicios y la lista de doctores, así como también en la pantalla de inicio para el perfil `doctor`, en donde se muestra la información del doctor asociado al usuario con el que se inició la sesión.
+
+### Construcción de un Hook Personalizado
+
+Se desarrolló un nuevo componente, el cual consiste en un formulario para el registro de nuevos pacientes en el hospital. Para ello, se creó el hook personalizado `useForm`, el cual provee los elementos básicos para el manejo de formularios dentro de la aplicación. Asimismo, se modificó la lógica del formulario de agendamiento de citas médicas, de manera de poder reutilizar el mismo hook antes mencionado.
+
+### Manejo de Errores en la Aplicación
+
+En caso de que ocurran errores en los formularios de creación de citas y registro de pacientes, se despliega un modal de error con el detalle de los errores obtenidos. Para el caso de datos faltantes, tal mensaje se muestra al usuario en pantalla.
+
+### Aplicación Correcta de las Reglas de los Hooks
+
+Durante el desarrollo del presente ejercicio se tomaron en consideración las mejores prácticas respecto del uso de hooks, evitando llamarlos dentro de expresiones condicionales y/o bucles. Además, ellos se llaman en el nivel superior de los componentes donde se usan, y se siguieron los lineamientos vistos en las clases teóricas.
+
 
 ## Copyright
 © 2025 Hospital San Itario. Todos los derechos reservados.
