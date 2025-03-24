@@ -4,6 +4,7 @@ import { decryptInput } from "../utils/encryption";
 const API_URL = "http://localhost:3001";
 
 const useCrud = (baseEndpoint, token) => {
+
     const createData = async (data) => {
         try {
             const response = await axios.post(`${API_URL + baseEndpoint}`, data, {
@@ -30,18 +31,18 @@ const useCrud = (baseEndpoint, token) => {
                   }
             });
             if (predicateFilter) {
-                return response.data.filter(predicateFilter).map(item => decryptItem(item));
+                return response.data.filter(predicateFilter);
             }
-            return response.data.map(item => decryptItem(item));
+            return response.data;
         } catch (error) {
             console.log(`Error:`, error);
             throw error;
         }
     };
 
-    const updateData = async (id, data) => {
+    const updateData = async (data) => {
         try {
-            const response = await axios.put(`${API_URL + baseEndpoint + "/" + id}`, data, {
+            const response = await axios.put(`${API_URL + baseEndpoint + "/" + data.id}`, data, {
                 headers: {
                   'Content-Type': 'application/json',
                   'Accept': 'application/json',
@@ -56,6 +57,7 @@ const useCrud = (baseEndpoint, token) => {
     };
 
     const deleteData = async (id) => {
+        console.log(`Deleting id: ${id}`);
         try {
             const response = await axios.delete(`${API_URL + baseEndpoint + "/" + id}`, {
                 headers: {
@@ -70,14 +72,6 @@ const useCrud = (baseEndpoint, token) => {
             throw error;
         }
     };
-
-    const decryptItem = (item) => {
-        let decrypted = {};
-        for (const [k,v] of Object.entries(item)) {
-            decrypted[k] = decryptInput(v);
-        }
-        return decrypted;
-    }
 
     return { createData, findData, updateData, deleteData };
 };

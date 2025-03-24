@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { sanitizeAndEncrypt } from "../utils/functions";
+import { sanitizeData } from "../utils/functions";
+import { encryptInput } from "../utils/encryption";
 
-const useForm = (initialValues, validate, onSubmit) => {
+const useForm = (initialValues, validate, onSubmit, onClose, encrypt) => {
     const [values, setValues] = useState(initialValues);
     const [errors, setErrors] = useState({});
     const [processing, setProcessing] = useState(false);
@@ -10,19 +11,28 @@ const useForm = (initialValues, validate, onSubmit) => {
         setValues({ ...values, [event.target.id]: event.target.value});
     };
 
+    const encryptData = (plainData) => {
+        let encryptedData = {};
+        for (const [key, value] of Object.entries(plainData)) {
+            encryptedData[key] = encryptInput(value);
+        }
+        return encryptedData;
+    };
+
     const handleSubmit = (event) => {
         event.preventDefault();
+        setValues(sanitizeData(values));
         const errorsFound = validate(values);
         setErrors(errorsFound);
         if (!errorsFound || Object.keys(errorsFound).length === 0) {
-            let encryptedValues = {};
-            for (const [key, value] of Object.entries(values)) {
-                encryptedValues[key] = sanitizeAndEncrypt(value);
+            if (encrypt) {
+                setValues(encryptData(values));
             }
-
+           
             setProcessing(true);
-            onSubmit(encryptedValues);
+            onSubmit(values);
             setProcessing(false);
+            onClose();
         }
     };
     

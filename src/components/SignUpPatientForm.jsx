@@ -33,7 +33,7 @@ const SignUpPatientForm = () => {
     };
 
     const { errors, handleChange, handleSubmit } = useForm(
-        { name: "", email: "", password: "", role: "patient" }, validate, onSubmit
+        { name: "", email: "", password: "", role: "patient" }, validate, onSubmit, () => {}, true
     );
 
     const hasError = () => {
