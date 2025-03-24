@@ -12,10 +12,9 @@
     {
       "id": "2",
       "name": "Kenny Bell",
-      "imageUrl": "../../images/medico_02.jpg",
       "specialty": "Oftalmología",
       "experience": "Experto en el tratamiento de miopía y astigmatismo",
-      "yearsOfExperience": 4,
+      "yearsOfExperience": "4",
       "email": "kenny@hsi.com"
     },
     {

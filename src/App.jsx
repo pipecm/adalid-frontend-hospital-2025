@@ -7,14 +7,3 @@ function App() {
 }
 
 export default App;
-
-/*
-return (
-		<div className="App" id="home">
-			<CurrentViewProvider>
-				<Header />
-				<CurrentView />
-			</CurrentViewProvider>
-		</div>
-	);
-*/

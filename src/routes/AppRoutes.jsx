@@ -7,6 +7,7 @@ import LoginView from "../views/LoginView";
 import ProtectedRoute from './ProtectedRoute';
 import DoctorProfileView from "../views/DoctorProfileView";
 import SignUpPatientView from "../views/SignUpPatientView";
+import DashboardView from "../views/DashboardView";
 
 const AppRoutes = () => {
     return (
@@ -37,6 +38,12 @@ const AppRoutes = () => {
 					<Route path="/doctor" element={
 						<ProtectedRoute allowedRoles={["doctor", "admin"]}>
 							<DoctorProfileView />
+						</ProtectedRoute>
+					}>
+					</Route>
+					<Route path="/dashboard" element={
+						<ProtectedRoute allowedRoles={["admin"]}>
+							<DashboardView />
 						</ProtectedRoute>
 					}>
 					</Route>

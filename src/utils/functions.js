@@ -8,12 +8,24 @@ export const removeQuotes = (quotedString) => {
 };
 
 export const sanitizeAndEncrypt = (input) => {
+    return encryptInput(sanitize(input));
+};
+
+export const sanitize = (input) => {
     if (input) {
         const div = document.createElement("div");
         div.innerText = input;
-        return encryptInput(div.innerHTML);
+        return div.innerHTML;
     }
     return undefined;
+};
+
+export const sanitizeData = (plainData) => {
+    let sanitized = {};
+    for (const [key, value] of Object.entries(plainData)) {
+        sanitized[key] = sanitize(value);
+    }
+    return sanitized;
 };
 
 export const getStoredUser = () => {
@@ -29,7 +41,7 @@ export const shuffleList = (list) => {
 export const validateEmptyFields = (data) => {
     let errors = {};
     for (let key in data) {
-        if (!data[key]) {
+        if (key != "id" && !data[key]) {
             errors[key] = `El campo ${key} no puede estar vacío`;
         }
     }

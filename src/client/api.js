@@ -25,6 +25,11 @@ export const getServices = async (token, user) => {
     return services;
 };
 
+export const getPatients = async (token, user) => {
+    let users = await getData("/users", token, user);
+    return users.filter(user => decryptInput(user.role) === "patient");
+};
+
 export const createUser = async (newUser) => {
     try {
         const response = await axios.post(`${API_URL + "/users"}`, newUser, {

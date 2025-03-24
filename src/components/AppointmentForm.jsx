@@ -31,7 +31,7 @@ const AppointmentForm = () => {
     };
 
     const { values, errors, handleChange, handleSubmit } = useForm(
-        { patient: authenticatedUser["name"], email: authenticatedUser["email"], specialty: "", message: "" }, validate, onSubmit
+        { patient: authenticatedUser["name"], email: authenticatedUser["email"], specialty: "", message: "" }, validate, onSubmit, () => {}, true
     );
 
     const hasError = () => {
