@@ -74,7 +74,6 @@ const DashboardView = () => {
                         <thead>
                             <tr>
                                 <th>Nombre</th>
-                                <th>Email</th>
                                 <th>Especialidad</th>
                                 <th>Años de experiencia</th>
                                 <th>Acciones</th>
@@ -84,7 +83,6 @@ const DashboardView = () => {
                             {doctors.map(doctor => (
                                 <tr key={doctor.id}>
                                     <td>{doctor.name}</td>
-                                    <td>{doctor.email}</td>
                                     <td>{doctor.specialty}</td>
                                     <td>{doctor.yearsOfExperience}</td>
                                     <td>
