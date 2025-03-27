@@ -69,13 +69,13 @@ const SignUpPatientForm = () => {
             <div className="card-body">
                 {submitted && !hasError() && (
                     <Modal onClose={redirectToLogin}>
-                        <img className="modal-icon" src="../../images/icon_ok.svg" alt="OK" />
+                        <img className="modal-icon" src="http://localhost:3001/assets/images/icon_ok.svg" alt="OK" />
                         <h4>Paciente registrado exitosamente</h4>
                     </Modal>
                 )}
                 {submitted && hasError() && (
                     <Modal onClose={() => setSubmitted(false)}>
-                        <img className="modal-icon" src="../../images/icon_error.svg" alt="Error" />
+                        <img className="modal-icon" src="http://localhost:3001/assets/images/icon_error.svg" alt="Error" />
                         <h4>Error al registrar paciente</h4>
                         <ul>
                             {submitError && <li>{submitError}</li>}

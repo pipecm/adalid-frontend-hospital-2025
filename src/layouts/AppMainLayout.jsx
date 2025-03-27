@@ -34,6 +34,13 @@ const AppMainLayout = ({ children }) => {
                                         </Link>
                                     </li>
                                 }
+                                {user && (user['role'] === "admin") &&
+                                    <li className="nav-item nav-link">
+                                        <Link to="/dashboard">
+                                            <span className="nav-text">Dashboard</span>
+                                        </Link>
+                                    </li>
+                                }
                             </ul>
                         </div>
                     </div>

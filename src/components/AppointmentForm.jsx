@@ -66,13 +66,13 @@ const AppointmentForm = () => {
             <div className="card-body">
                 {submitted && !hasError() && (
                     <Modal onClose={() => cleanForm()}>
-                        <img className="modal-icon" src="../../images/icon_ok.svg" alt="OK" />
+                        <img className="modal-icon" src="http://localhost:3001/assets/images/icon_ok.svg" alt="OK" />
                         <h4>Cita agendada exitosamente</h4>
                     </Modal>
                 )}
                  {submitted && hasError() && (
                     <Modal onClose={() => setSubmitted(false)}>
-                        <img className="modal-icon" src="../../images/icon_error.svg" alt="Error" />
+                        <img className="modal-icon" src="http://localhost:3001/assets/images/icon_error.svg" alt="Error" />
                         <h4>Error al agendar</h4>
                         <ul>
                             {submitError && <li>{submitError}</li>}

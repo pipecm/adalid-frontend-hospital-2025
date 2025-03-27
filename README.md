@@ -138,6 +138,55 @@ En caso de que ocurran errores en los formularios de creación de citas y regist
 
 Durante el desarrollo del presente ejercicio se tomaron en consideración las mejores prácticas respecto del uso de hooks, evitando llamarlos dentro de expresiones condicionales y/o bucles. Además, ellos se llaman en el nivel superior de los componentes donde se usan, y se siguieron los lineamientos vistos en las clases teóricas.
 
+## Ejercicio práctico Nº1 - Módulo 6
+### Ejecución de PWA en ambiente local
+Para desplegar el sitio en su ambiente local, se debe realizar lo siguiente:
+
+1. Clonar el repositorio del sitio web:
+```
+git clone git@github.com:pipecm/adalid-frontend-hospital-2025.git
+```
+
+2. Acceder a la carpeta recientemente descargada:
+```
+cd adalid-frontend-hospital-2025
+```
+
+3. Cambiar de branch de Git:
+```
+git checkout m6-ejercicio-practico-01
+```
+
+4. Ejecutar los siguientes comando para instalar las dependencias de la aplicación:
+```
+npm install
+npm run build
+npm install -g serve
+```
+
+5. Ejecutar el comando para levantar localmente el servidor que provee de un entorno backend con `json-server`:
+```
+npm run server
+```
+Una vez levantado el servidor, éste se encontrará disponible en `http://localhost:3001`.
+
+6. Ejecutar el comando para levantar localmente la PWA:
+```
+serve -s dist
+```
+Una vez levantada la aplicación, ésta se encontrará disponible en `http://localhost:3000`.
+
+### Creación del Manifiesto
+Se creó el fichero `manifest.json`, el cual tiene por objeto proporcionar datos claves para la PWA del hospital, tales como el nombre (largo y corto) de la aplicación, links de los íconos, modo de pantalla y colores de fondo.
+
+### Registro de un Service Worker Básico
+Otro componente crucial para el funcionamiento de la PWA corresponde al Service Worker. Para ello, se implementó y registró este elemento, cuyo propósito es realizar el guardado en caché de los archivos principales de la aplicación, lo cual permite que la aplicación pueda funcionar de forma offline.
+
+### Implementación de Estrategias de Almacenamiento en Caché
+En este ejercicio se realizó la implementación de la estrategia `Stale-While-Revalidate`, la cual obtiene el contenido cacheado anteriormente, para luego actualizar el contenido de la caché en segundo plano.
+
+### Pruebas de Funcionamiento Offline y Validación con Lighthouse
+El reporte generado por Lighthouse se puede ver [aquí](reports/lighthouse/localhost_3000-20250326T214230.html). Éste fue creado usando el módo incógnito del browser Google Chrome.
 
 ## Copyright
 © 2025 Hospital San Itario. Todos los derechos reservados.
