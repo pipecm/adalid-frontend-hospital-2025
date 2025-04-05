@@ -29,7 +29,7 @@ export const sanitizeData = (plainData) => {
 };
 
 export const getStoredUser = () => {
-    return localStorage.getItem(KEY_HOSPITAL_USER);
+    return sessionStorage.getItem(KEY_HOSPITAL_USER);
 };
 
 export const shuffleList = (list) => { 

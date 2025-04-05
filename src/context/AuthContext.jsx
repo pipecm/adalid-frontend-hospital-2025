@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const storedUser = localStorage.getItem(KEY_HOSPITAL_USER);
+        const storedUser = sessionStorage.getItem(KEY_HOSPITAL_USER);
         if (storedUser) {
             const decryptedUser = decryptData(storedUser);
             setUser(decryptedUser);
@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }) => {
                 };
                 setUser(userData);
                 const encryptedUser = encryptData(userData);
-                localStorage.setItem(KEY_HOSPITAL_USER, encryptedUser);
+                sessionStorage.setItem(KEY_HOSPITAL_USER, encryptedUser);
                 return userData;
             } else {
                 throw new Error("Invalid credentials")
@@ -46,7 +46,7 @@ export const AuthProvider = ({ children }) => {
 
     const logout = () => {
         setUser(null);
-        localStorage.removeItem(KEY_HOSPITAL_USER);
+        sessionStorage.removeItem(KEY_HOSPITAL_USER);
     }
 
     const value = { user, login, logout, isAuthenticated: !!user, }

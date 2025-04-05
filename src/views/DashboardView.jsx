@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import AppMainLayout from "../layouts/AppMainLayout";
-import useCrud from "../hooks/useCrud";
-import { useAuth } from "../context/AuthContext";
 import DoctorForm from "../components/DoctorForm";
 import CrudModal from "../components/CrudModal";
+import useDatabase from "../hooks/useDatabase";
 
 const DashboardView = () => {
     const [doctors, setDoctors] = useState([]);
@@ -11,20 +10,31 @@ const DashboardView = () => {
     const [openDetails, setOpenDetails] = useState(false);
     const [modalData, setModalData] = useState({});
 
-    const { user: authenticatedUser } = useAuth();
-    const { createData: createDoctor, findData: getDoctors, updateData: updateDoctor, deleteData: deleteDoctor } = useCrud("/doctors", authenticatedUser);
+    const { insert: createDoctor, findAll: findAllDoctors, update: updateDoctor, remove: deleteDoctor } = useDatabase("doctors");
 
     const getOperationFunction = (operation) => {
         let operationFunction;
         switch(operation) {
             case 1:
-                operationFunction = createDoctor;
+                operationFunction = (doctor) => {
+                    createDoctor(doctor)
+                        .then(msg => console.log(msg))
+                        .catch(error => setError(error));
+                };
                 break;
             case 2:
-                operationFunction = updateDoctor;
+                operationFunction = (doctor) => {
+                    updateDoctor(doctor)
+                        .then(msg => console.log(msg))
+                        .catch(error => setError(error));
+                };
                 break;
             case 3:
-                operationFunction = deleteDoctor;
+                operationFunction = (doctorId) => {
+                    deleteDoctor(doctorId)
+                        .then(msg => console.log(msg))
+                        .catch(error => setError(error));
+                };
                 break;
             default:
                 throw new Error("Operación no válida");
@@ -48,16 +58,9 @@ const DashboardView = () => {
     }
 
     useEffect(() => {
-        const fetchDoctors = async () => {
-            try {
-                const doctorsFound = await getDoctors();
-                setDoctors(doctorsFound);
-            } catch (err) {
-                setError(err);
-            }
-        };
-
-        fetchDoctors();
+        findAllDoctors()
+            .then(data =>  setDoctors(data))
+            .catch(error => setError(error));
     }, [doctors]);
 
     if (error) return <h3>{error}</h3>;
