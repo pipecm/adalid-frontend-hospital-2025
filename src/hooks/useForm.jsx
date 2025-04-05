@@ -25,12 +25,13 @@ const useForm = (initialValues, validate, onSubmit, onClose, encrypt) => {
         const errorsFound = validate(values);
         setErrors(errorsFound);
         if (!errorsFound || Object.keys(errorsFound).length === 0) {
+            let encryptedValues;
             if (encrypt) {
-                setValues(encryptData(values));
+                encryptedValues = encryptData(values);
             }
            
             setProcessing(true);
-            onSubmit(values);
+            onSubmit(encrypt ? encryptedValues : values);
             setProcessing(false);
             onClose();
         }

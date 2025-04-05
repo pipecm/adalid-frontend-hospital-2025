@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { decryptInput, decryptData, encryptData } from "../utils/encryption";
-import { findUserByEmail } from "../client/api";
 import { removeQuotes } from "../utils/functions";
+import useDatabase from "../hooks/useDatabase";
 
 const SESSION_DURATION_IN_MINUTES = 30;
 const MILLIS_PER_MINUTE = 60 * 1000;
@@ -11,6 +11,8 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+
+    const { findBy: findUsers } = useDatabase("users");
 
     useEffect(() => {
         const storedUser = sessionStorage.getItem(KEY_HOSPITAL_USER);
@@ -22,14 +24,14 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     const login = async (email, password) => {
-        const userFound = await findUserByEmail(email);
+        const userFound = await findUsers(user => decryptInput(user.email) === decryptInput(email));
         if (userFound) {
-            if (decryptInput(password) === removeQuotes(decryptInput(userFound.password))) {
+            if (decryptInput(password) === removeQuotes(decryptInput(userFound[0].password))) {
                 const expiresOn = new Date(Date.now() + (SESSION_DURATION_IN_MINUTES * MILLIS_PER_MINUTE));
                 const userData = { 
-                    name: removeQuotes(decryptInput(userFound.name)),
-                    email: removeQuotes(decryptInput(userFound.email)),
-                    role: removeQuotes(decryptInput(userFound.role)),
+                    name: removeQuotes(decryptInput(userFound[0].name)),
+                    email: removeQuotes(decryptInput(userFound[0].email)),
+                    role: removeQuotes(decryptInput(userFound[0].role)),
                     expiresOn: expiresOn 
                 };
                 setUser(userData);

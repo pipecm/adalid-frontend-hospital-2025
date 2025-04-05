@@ -8,7 +8,7 @@ export default function DoctorList({ doctors }) {
             <h2>Equipo médico</h2>
             <ul className="services-list">
                 {doctors.map(doctor => (
-                    <li key={parseInt(doctor.id)}>
+                    <li key={doctor.id}>
                         <DoctorCard doctor={doctor} />
                     </li>
                 ))}

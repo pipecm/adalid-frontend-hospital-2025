@@ -3,10 +3,16 @@ import jsonData from "../../db.json"
 const DB_NAME = "hsi_db";
 const DB_VERSION = 1;
 
+const COLLECTIONS_TO_PERSIST = ["doctors", "services", "users", "appointments"];
+
 const useDatabase = (collection) => {
     const findAll = () => {
         return buildPromise("find", []);
     };
+
+    const findBy = (predicate) => {
+        return buildPromise("findBy", predicate);
+    }
 
     const insert = (data) => {
         return buildPromise("insert", data);
@@ -23,6 +29,11 @@ const useDatabase = (collection) => {
     const buildPromise = (operation, data) => {
         return new Promise((resolve, reject) => {
             const request = indexedDB.open(DB_NAME, DB_VERSION);
+
+            request.onupgradeneeded = (event) => {
+                const db = event.target.result;
+                populate(db);
+            };
         
             request.onerror = (event) => onError(event, "Error abriendo IndexedDB", reject);
         
@@ -41,6 +52,10 @@ const useDatabase = (collection) => {
                         operationRequest = store.getAll();
                         operationRequest.onsuccess = () => resolve(operationRequest.result);
                         break;
+                    case "findBy":
+                        operationRequest = store.getAll();
+                        operationRequest.onsuccess = () => resolve(operationRequest.result.filter(data));
+                        break;
                     case "update":
                         operationRequest = store.put(data);
                         operationRequest.onsuccess = () => resolve("Datos actualizados exitosamente");
@@ -54,28 +69,27 @@ const useDatabase = (collection) => {
                 }
         
                 operationRequest.onerror = (event) => onError(event, "Se ha producido un error", reject);
-            };
-        
-            request.onupgradeneeded = createCollection; 
+            };   
         });
-    };
-
-    const createCollection = (event) => {
-        const db = event.target.result;
-        if (!db.objectStoreNames.contains(collection)) {
-            const store = db.createObjectStore(collection, { keyPath: "id" });
-            for (const item of jsonData[collection]) {
-                store.add(item);
-            }
-        }
-    };
+    }; 
 
     const onError = (event, message, reject) => {
         console.error(message, event);
         reject(event);
-    }
+    };
 
-   return { insert, findAll, update, remove };
+    const populate = (db) => {
+        for (const table of COLLECTIONS_TO_PERSIST) {
+            if (!db.objectStoreNames.contains(table)) {
+                const store = db.createObjectStore(table, { keyPath: "id" });
+                for (const item of jsonData[table]) {
+                    store.add(item);
+                }
+            }
+        }
+    };
+
+   return { insert, findAll, findBy, update, remove };
 };
 
 export default useDatabase;
