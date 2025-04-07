@@ -3,14 +3,25 @@ import Modal from "./Modal";
 import useForm from "../hooks/useForm";
 import { validateEmptyFields } from "../utils/functions";
 import { useNavigate } from "react-router-dom";
-import { createUser } from "../client/api";
+import useDatabase from "../hooks/useDatabase";
+import { v4 as uuidv4 } from 'uuid';
 
 const SignUpPatientForm = () => {
     const [submitted, setSubmitted] = useState(false);
     const [confirmPwd, setConfirmPwd] = useState(undefined);
     const [submitError, setSubmitError] = useState(undefined);
+
+    const { insert: createUser } = useDatabase("users");
  
     const navigate = useNavigate();
+
+    let patientValues = { 
+        id: uuidv4(),
+        name: "", 
+        email: "", 
+        password: "", 
+        role: "patient" 
+    }
 
     const validate = (values) => {
         setSubmitted(true);
@@ -21,20 +32,17 @@ const SignUpPatientForm = () => {
         return validationErrors;
     };
 
-    const onSubmit = async (encryptedValues) => {
-        try {
-            const response = await createUser(encryptedValues);
-            console.log(`Response: ${JSON.stringify(response)}`);
-            setSubmitError(undefined);
-            setSubmitted(true);
-        } catch (error) {
-            setSubmitError(`Error al crear usuario: ${error.message}`);
-        }
+    const onSubmit = (encryptedValues) => {
+        createUser(encryptedValues)
+            .then(response => {
+                console.log(response);
+                setSubmitError(undefined);
+                setSubmitted(true);
+            })
+            .catch(error => setSubmitError(`Error al crear usuario: ${error.message}`));
     };
 
-    const { errors, handleChange, handleSubmit } = useForm(
-        { name: "", email: "", password: "", role: "patient" }, validate, onSubmit, () => {}, true
-    );
+    const { errors, handleChange, handleSubmit } = useForm(patientValues, validate, onSubmit, () => {}, true);
 
     const hasError = () => {
         return (Object.keys(errors).length > 0) || !!submitError;

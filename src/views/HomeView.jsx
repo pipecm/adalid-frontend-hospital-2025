@@ -2,18 +2,20 @@ import React, { useState, useEffect, Profiler } from 'react';
 import ServiceList from '../components/ServiceList'
 import HospitalInfo from '../components/HospitalInfo';
 import AppMainLayout from '../layouts/AppMainLayout';
-import { getServices } from '../client/api';
 import { useAuth } from '../context/AuthContext';
 import TokenError from '../errors/TokenError';
-import { getStoredUser, shuffleList } from '../utils/functions';
+import { shuffleList } from '../utils/functions';
 import { useNavigate } from 'react-router-dom';
+import useDatabase from '../hooks/useDatabase';
 
 const HomeView = () => {
     const [services, setServices] = useState([]);
     const [error, setError] = useState(null);
     const [reloaded, setReloaded] = useState(false);
-    const { user: authenticatedUser, logout } = useAuth();
+    const { logout } = useAuth();
     const navigate = useNavigate();
+
+    const { findAll: findAllServices } = useDatabase("services");
 
     const onRenderCallback = (id, phase, actualDuration) => {
 		console.log(`${id} (${phase}) tomó ${actualDuration} ms para renderizar`);
@@ -25,12 +27,9 @@ const HomeView = () => {
     }
 
     useEffect(() => {
-        const fetchServices = async () => {
-            try {
-                const currentUser = getStoredUser();
-                let response = await getServices(currentUser, authenticatedUser);
-                setServices(shuffleList(response));
-            } catch(error) {
+        findAllServices()
+            .then(services => setServices(shuffleList(services)))
+            .catch(error => {
                 if (error instanceof TokenError) {
                     alert(error.message);
                     logout();
@@ -38,10 +37,7 @@ const HomeView = () => {
                 } else {
                     setError(error);
                 }
-            }
-        }
-
-        fetchServices();
+            });
     }, [reloaded]);
 
     if (error) {

@@ -188,5 +188,18 @@ En este ejercicio se realizó la implementación de la estrategia `Stale-While-R
 ### Pruebas de Funcionamiento Offline y Validación con Lighthouse
 El reporte generado por Lighthouse se puede ver [aquí](reports/lighthouse/localhost_3000-20250326T214230.html). Éste fue creado usando el módo incógnito del browser Google Chrome.
 
+## Ejercicio práctico Nº2 - Módulo 6
+### Implementación de Almacenamiento Web
+Se implementó el uso de `SessionStorage` para almacenar la información del usuario logeado en el sistema, de manera que ésta sólo permanezca activa mientras la sesión esté activa. Cada vez que se finalice sesión o se cierre el browser, la información ya no se encuentra disponible y al volver a ingresar a la aplicación se solicitarán nuevamente las credenciales de acceso.
+
+### Implementación de IndexedDB
+Para la persistencia de datos se implementó el motor `IndexedDB`, para lo cual se creó un hook personalizado que agrupa a las diferentes operaciones de la base de datos (crear, seleccionar, editar y borrar). Asimismo, cuando la app se ejecuta por primera vez la base de datos se pobla con datos iniciales, los cuales se encuentran disponibles en el fichero `db.json`.
+
+### Despliegue y Configuración del Service Worker Personalizado
+Se realizó una pequeña mejora al Service Worker implementado previamente, específicamente se añadieron al caché las imágenes de los doctores y servicios.
+
+### Pruebas de Rendimiento con Lighthouse
+El reporte generado por Lighthouse se puede ver [aquí](reports/lighthouse/localhost_3000-20250405T201732.html). Éste fue creado usando el módo incógnito del browser Google Chrome.
+
 ## Copyright
 © 2025 Hospital San Itario. Todos los derechos reservados.

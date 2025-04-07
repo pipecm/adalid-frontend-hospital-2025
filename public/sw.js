@@ -1,5 +1,5 @@
 const CACHE_NAME = "hsi-cache-v1";
-const urlsToCache = ['/', '/index.html', '/main.js', 'icons/icon-192x192.png', 'icons/icon-512x512.png'];
+const urlsToCache = ['/', '/index.html', '/main.js', 'icons/icon-192x192.png', 'icons/icon-512x512.png', 'assets/images'];
 const EVENT_INSTALL = "install"
 const EVENT_FETCH = "fetch";
 
@@ -9,8 +9,6 @@ self.addEventListener(EVENT_INSTALL, event => {
             .then(cache => cache.addAll(urlsToCache))
     )
 });
-
-/* Estrategia: Stale While Revalidate */
 
 self.addEventListener(EVENT_FETCH, event => {
     event.respondWith(

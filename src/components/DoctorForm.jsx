@@ -1,10 +1,11 @@
 import useForm from "../hooks/useForm";
 import { validateEmptyFields } from "../utils/functions";
+import { v4 as uuidv4 } from 'uuid';
 
 const DoctorForm = ({ operation, doctor, onSubmit, onClose }) => {
 
     let doctorValues = {
-        id: doctor? doctor.id : undefined,
+        id: doctor? doctor.id : uuidv4(),
         name: doctor ? doctor.name : "",
         specialty: doctor ? doctor.specialty :  "",
         experience: doctor ? doctor.experience : "",

@@ -1,15 +1,24 @@
 import { useState } from "react";
 import Modal from "./Modal";
-import { createAppointment } from "../client/api";
-import { getStoredUser, validateEmptyFields } from "../utils/functions";
+import { validateEmptyFields } from "../utils/functions";
 import { useAuth } from "../context/AuthContext";
 import useForm from "../hooks/useForm";
+import { v4 as uuidv4 } from 'uuid';
+import useDatabase from "../hooks/useDatabase";
 
 const AppointmentForm = () => {
     const [submitted, setSubmitted] = useState(false);
     const [submitError, setSubmitError] = useState(undefined);
-
     const { user: authenticatedUser } = useAuth();
+    const { insert: createAppointment } = useDatabase("appointments");
+
+    let appointmentData = { 
+        id: uuidv4(),
+        patient: authenticatedUser["name"], 
+        email: authenticatedUser["email"], 
+        specialty: "", 
+        message: "" 
+    };
 
     const validate = (values) => {
         setSubmitted(true);
@@ -17,22 +26,17 @@ const AppointmentForm = () => {
         return validationErrors;
     };
 
-    const onSubmit = async (encryptedValues) => {
-        const currentUser = getStoredUser();
-
-        try {
-            const response = await createAppointment(currentUser, authenticatedUser, encryptedValues);
-            console.log(`Response: ${JSON.stringify(response)}`);
-            setSubmitError(undefined);
-            setSubmitted(true);
-        } catch (error) {
-            setSubmitError(`Error al crear cita médica: ${error.message}`);
-        }
+    const onSubmit = (encryptedValues) => {
+        createAppointment(encryptedValues)
+            .then(response => {
+                console.log(response);
+                setSubmitError(undefined);
+                setSubmitted(true);
+            })
+            .catch(error => setSubmitError(`Error al crear cita médica: ${error.message}`));
     };
 
-    const { values, errors, handleChange, handleSubmit } = useForm(
-        { patient: authenticatedUser["name"], email: authenticatedUser["email"], specialty: "", message: "" }, validate, onSubmit, () => {}, true
-    );
+    const { values, errors, handleChange, handleSubmit } = useForm(appointmentData, validate, onSubmit, () => {}, false);
 
     const hasError = () => {
         return (Object.keys(errors).length > 0) || !!submitError;
@@ -86,3 +90,16 @@ const AppointmentForm = () => {
 };
 
 export default AppointmentForm;
+
+/*
+const currentUser = getStoredUser();
+
+        try {
+            const response = await createAppointment(currentUser, authenticatedUser, encryptedValues);
+            console.log(`Response: ${JSON.stringify(response)}`);
+            setSubmitError(undefined);
+            setSubmitted(true);
+        } catch (error) {
+            setSubmitError(`Error al crear cita médica: ${error.message}`);
+        }
+*/
