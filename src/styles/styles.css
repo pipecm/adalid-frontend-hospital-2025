@@ -3,10 +3,13 @@
 }
 
 .hospital-menu {
-    width: 1200px;
     display: flex;
     padding: 10px;
-    margin: 10px;
+    margin: 0;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-evenly;
 }
 
 .services-list {
@@ -20,7 +23,7 @@
 
 .services-list li {
     border: 1px solid;
-    width: 35rem;
+    width: 33rem;
     border-radius: 15px;
     margin: 10px;
     padding: 10px;
@@ -42,8 +45,12 @@
 .btn-menu,
 .btn-modal,
 .btn-appt {
-    width: 10rem;
+    width: 9rem;
     margin: 0.5rem;
+    color: white;
+    background-color: #0d6efd;
+    border: 1px solid white;
+    border-radius: 0.375rem;
 }
 
 .appt-link {
@@ -91,7 +98,7 @@
 .values__card {
     padding: 1rem;
     margin: 1rem;
-    width: 30rem;
+    width: 28rem;
     height: 10rem;
     border: none;
     border-radius: 1rem;
@@ -103,6 +110,7 @@
 .nav-text {
     color: white;
     text-decoration: none;
+    padding: 0.5rem;
 }
 
 .card-form {
@@ -120,4 +128,102 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.container-login {
+    width: auto;
+    max-width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.navbar-hospital {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.navbar-upper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.navbar-lower {
+    display: flex;
+    flex-direction: row;
+    padding: 0.1rem;
+    margin: 0 0 2rem 0;
+    background-color: gray;
+    align-items: center;
+    justify-content: left;
+    width: 100%;
+}
+
+@media screen and (max-width: 380px)  {
+    .btn-menu, .btn-modal, .btn-appt {
+        width: 9rem;
+        margin: 0.1rem;
+    }
+
+    .hospital-menu {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    .hospital-banner {
+        width: 100%;
+        --bs-navbar-brand-margin-end: 0rem;
+    }
+
+    .container-login {
+        width: auto;
+        max-width: 380px;
+    }
+
+    .services-list li {
+        width: 29rem;
+        border-radius: 15px;
+    }
+
+    .service__img, .img-profile-doctor {
+        width: 28rem;
+        height: 25rem;
+    }
+}
+  
+@media screen and (min-width: 381px) and (max-width: 667px) {
+    .btn-menu, .btn-modal, .btn-appt {
+        width: 10rem;
+        margin: 0.3rem;
+    }
+
+    .hospital-menu {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    .hospital-banner {
+        width: 100%;
+        --bs-navbar-brand-margin-end: 0rem;
+    }
+
+    .container-login {
+        width: auto;
+        max-width: 667px;
+    }
+
+    .service__img, .img-profile-doctor {
+        width: 28rem;
+    }
 }
