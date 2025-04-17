@@ -1,9 +1,8 @@
 import axios from "axios";
-import { decryptInput } from "../utils/encryption";
 
 const API_URL = "http://localhost:3001";
 
-const useCrud = (baseEndpoint, token) => {
+const useRestApi = (baseEndpoint, token) => {
 
     const createData = async (data) => {
         try {
@@ -76,4 +75,4 @@ const useCrud = (baseEndpoint, token) => {
     return { createData, findData, updateData, deleteData };
 };
 
-export default useCrud;
+export default useRestApi;

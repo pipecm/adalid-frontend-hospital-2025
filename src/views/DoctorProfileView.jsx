@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import AppMainLayout from '../layouts/AppMainLayout'
-import useDatabase from '../hooks/useDatabase';
+import useRestApi from '../hooks/useRestApi';
 
 const DoctorProfileView = () => {
     const [doctor, setDoctor] = useState(undefined);
     const [error, setError] = useState(undefined);
     const { user: authenticatedUser } = useAuth();
-    const { findAll: findAllDoctors } = useDatabase("doctors");
+    const { findData: findAllDoctors } = useRestApi("/doctors", authenticatedUser);
     
     useEffect(() => {
         findAllDoctors()

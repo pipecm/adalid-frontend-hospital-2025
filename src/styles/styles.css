@@ -157,11 +157,22 @@
     display: flex;
     flex-direction: row;
     padding: 0.1rem;
-    margin: 0 0 2rem 0;
+    margin: 0 0 0.5rem 0;
     background-color: gray;
     align-items: center;
     justify-content: left;
     width: 100%;
+}
+
+.distance-to-hospital {
+    color: white;
+    background-color: yellowgreen;
+    font-weight: bold;
+    border-radius: 1rem;
+    padding: 1rem 0;
+    text-align: center;
+    vertical-align: middle;
+    margin: 0 0 2rem 0;
 }
 
 @media screen and (max-width: 380px)  {

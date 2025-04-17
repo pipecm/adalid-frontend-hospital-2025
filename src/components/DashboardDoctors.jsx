@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import DoctorForm from "../components/DoctorForm";
 import CrudModal from "../components/CrudModal";
-import useDatabase from "../hooks/useDatabase";
+import useRestApi from "../hooks/useRestApi";
+import { useAuth } from "../context/AuthContext";
 
 const DashboardDoctors = () => {
     const [doctors, setDoctors] = useState([]);
@@ -9,7 +10,9 @@ const DashboardDoctors = () => {
     const [openDetails, setOpenDetails] = useState(false);
     const [modalData, setModalData] = useState({});
 
-    const { insert: createDoctor, findAll: findAllDoctors, update: updateDoctor, remove: deleteDoctor } = useDatabase("doctors");
+    const { user: authenticatedUser } = useAuth();
+    const { createData: createDoctor, findData: findAllDoctors, 
+        updateData: updateDoctor, deleteData: deleteDoctor } = useRestApi("/doctors", authenticatedUser);
 
     const getOperationFunction = (operation) => {
         let operationFunction;
