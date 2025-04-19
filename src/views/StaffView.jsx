@@ -4,19 +4,19 @@ import AppMainLayout from "../layouts/AppMainLayout";
 import { useAuth } from "../context/AuthContext";
 import TokenError from "../errors/TokenError";
 import { useNavigate } from "react-router-dom";
-import useDatabase from "../hooks/useDatabase";
+import useRestApi from "../hooks/useRestApi";
 
 const StaffView = () => {
     const [doctors, setDoctors] = useState([]);
     const [error, setError] = useState(null);
-    const { logout } = useAuth();
+    const { user: authenticatedUser, logout } = useAuth();
     const navigate = useNavigate();
 
     const onRenderCallback = (id, phase, actualDuration) => {
 		console.log(`${id} (${phase}) tomó ${actualDuration} ms para renderizar`);
 	};
 
-    const { findAll : findAllDoctors } = useDatabase("doctors");
+    const { findData : findAllDoctors } = useRestApi("/doctors", authenticatedUser);
 
     useEffect(() => {
         findAllDoctors()
@@ -33,6 +33,7 @@ const StaffView = () => {
     }, []);
 
     if (error) return <h3>{`Error al cargar los datos: ${error}`}</h3>;
+    if (!doctors) return <h3>Cargando...</h3>;
         
     return (
         <AppMainLayout>

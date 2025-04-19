@@ -1,32 +1,18 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import AppMainLayout from '../layouts/AppMainLayout'
-import { findDoctorByEmail } from '../client/api';
-import TokenError from '../errors/TokenError';
-import { getStoredUser } from '../utils/functions';
+import useRestApi from '../hooks/useRestApi';
 
 const DoctorProfileView = () => {
     const [doctor, setDoctor] = useState(undefined);
     const [error, setError] = useState(undefined);
-    const { user: authenticatedUser, logout } = useAuth();
+    const { user: authenticatedUser } = useAuth();
+    const { findData: findAllDoctors } = useRestApi("/doctors", authenticatedUser);
     
     useEffect(() => {
-        const retrieveDoctor = async () => {
-            try {
-                const currentUser = getStoredUser();
-                const doctorFound = await findDoctorByEmail(currentUser, authenticatedUser);
-                setDoctor(doctorFound);
-            } catch (error) {
-                if (error instanceof TokenError) {
-                    alert(error.message);
-                    logout();
-                } else {
-                    setError(error);
-                }
-            }
-        };
-
-        retrieveDoctor();
+        findAllDoctors()
+            .then(data => setDoctor(data.find(dr => dr.email === authenticatedUser.email)))
+            .catch(error => setError(error));
     }, []);
 
     if (!doctor) return <h1>Cargando...</h1>
@@ -36,7 +22,7 @@ const DoctorProfileView = () => {
         <AppMainLayout>
             <h1>{doctor.name}</h1>
             <h4>{doctor.specialty}</h4>
-            <img src={doctor.imageUrl} alt={doctor.name}/>
+            <img src={doctor.imageUrl} alt={doctor.name} className="img-profile-doctor"/>
             <p>{doctor.experience}</p>
         </AppMainLayout>
     );

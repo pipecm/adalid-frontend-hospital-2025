@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { decryptInput, decryptData, encryptData } from "../utils/encryption";
 import { removeQuotes } from "../utils/functions";
-import useDatabase from "../hooks/useDatabase";
+import useRestApi from "../hooks/useRestApi";
 
 const SESSION_DURATION_IN_MINUTES = 30;
 const MILLIS_PER_MINUTE = 60 * 1000;
@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    const { findBy: findUsers } = useDatabase("users");
+    const { findData: findUsers } = useRestApi("/users", null);
 
     useEffect(() => {
         const storedUser = sessionStorage.getItem(KEY_HOSPITAL_USER);

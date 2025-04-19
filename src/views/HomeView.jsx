@@ -6,16 +6,16 @@ import { useAuth } from '../context/AuthContext';
 import TokenError from '../errors/TokenError';
 import { shuffleList } from '../utils/functions';
 import { useNavigate } from 'react-router-dom';
-import useDatabase from '../hooks/useDatabase';
+import useRestApi from '../hooks/useRestApi';
 
 const HomeView = () => {
     const [services, setServices] = useState([]);
     const [error, setError] = useState(null);
     const [reloaded, setReloaded] = useState(false);
-    const { logout } = useAuth();
+    const { user: authenticatedUser, logout } = useAuth();
     const navigate = useNavigate();
 
-    const { findAll: findAllServices } = useDatabase("services");
+    const { findData: findAllServices } = useRestApi("/services", authenticatedUser);
 
     const onRenderCallback = (id, phase, actualDuration) => {
 		console.log(`${id} (${phase}) tomó ${actualDuration} ms para renderizar`);

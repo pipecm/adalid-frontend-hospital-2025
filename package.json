@@ -14,6 +14,7 @@
     "axios": "^1.7.9",
     "bootstrap": "^5.3.3",
     "crypto-js": "^4.2.0",
+    "geolib": "^3.3.4",
     "json-server": "^1.0.0-beta.3",
     "json-server-auth": "^2.1.0",
     "prop-types": "^15.8.1",

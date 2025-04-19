@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
-import useDatabase from "../hooks/useDatabase";
+import useRestApi from "../hooks/useRestApi";
+import { useAuth } from "../context/AuthContext";
 
 const DashboardAppointments = () => {
     const [appointments, setAppointments] = useState([]);
     const [error, setError] = useState(undefined);
-    const { findAll: findAllAppointments } = useDatabase("appointments");
+    const { user: authenticatedUser } = useAuth();
+    const { findData: findAllAppointments } = useRestApi("/appointments", authenticatedUser);
 
     useEffect(() => {
         findAllAppointments()

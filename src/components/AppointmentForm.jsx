@@ -4,13 +4,13 @@ import { validateEmptyFields } from "../utils/functions";
 import { useAuth } from "../context/AuthContext";
 import useForm from "../hooks/useForm";
 import { v4 as uuidv4 } from 'uuid';
-import useDatabase from "../hooks/useDatabase";
+import useRestApi from "../hooks/useRestApi";
 
 const AppointmentForm = () => {
     const [submitted, setSubmitted] = useState(false);
     const [submitError, setSubmitError] = useState(undefined);
     const { user: authenticatedUser } = useAuth();
-    const { insert: createAppointment } = useDatabase("appointments");
+    const { createData: createAppointment } = useRestApi("/appointments", authenticatedUser);
 
     let appointmentData = { 
         id: uuidv4(),
@@ -26,8 +26,8 @@ const AppointmentForm = () => {
         return validationErrors;
     };
 
-    const onSubmit = (encryptedValues) => {
-        createAppointment(encryptedValues)
+    const onSubmit = (appointment) => {
+        createAppointment(appointment)
             .then(response => {
                 console.log(response);
                 setSubmitError(undefined);
@@ -90,16 +90,3 @@ const AppointmentForm = () => {
 };
 
 export default AppointmentForm;
-
-/*
-const currentUser = getStoredUser();
-
-        try {
-            const response = await createAppointment(currentUser, authenticatedUser, encryptedValues);
-            console.log(`Response: ${JSON.stringify(response)}`);
-            setSubmitError(undefined);
-            setSubmitted(true);
-        } catch (error) {
-            setSubmitError(`Error al crear cita médica: ${error.message}`);
-        }
-*/

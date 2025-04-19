@@ -3,7 +3,7 @@ import Modal from "./Modal";
 import useForm from "../hooks/useForm";
 import { validateEmptyFields } from "../utils/functions";
 import { useNavigate } from "react-router-dom";
-import useDatabase from "../hooks/useDatabase";
+import useRestApi from "../hooks/useRestApi";
 import { v4 as uuidv4 } from 'uuid';
 
 const SignUpPatientForm = () => {
@@ -11,7 +11,7 @@ const SignUpPatientForm = () => {
     const [confirmPwd, setConfirmPwd] = useState(undefined);
     const [submitError, setSubmitError] = useState(undefined);
 
-    const { insert: createUser } = useDatabase("users");
+    const { createData: createUser } = useRestApi("/users", null);
  
     const navigate = useNavigate();
 
