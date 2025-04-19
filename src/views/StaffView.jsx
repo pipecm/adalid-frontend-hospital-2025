@@ -33,6 +33,7 @@ const StaffView = () => {
     }, []);
 
     if (error) return <h3>{`Error al cargar los datos: ${error}`}</h3>;
+    if (!doctors) return <h3>Cargando...</h3>;
         
     return (
         <AppMainLayout>
