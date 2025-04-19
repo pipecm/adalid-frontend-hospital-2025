@@ -189,6 +189,14 @@ En este ejercicio se realizó la implementación de la estrategia `Stale-While-R
 El reporte generado por Lighthouse se puede ver [aquí](reports/lighthouse/localhost_3000-20250326T214230.html). Éste fue creado usando el módo incógnito del browser Google Chrome.
 
 ## Ejercicio práctico Nº2 - Módulo 6
+### Ejecución de PWA en ambiente local
+Ver instrucciones de ejecución en la sección Ejercicio práctico Nº1 - Módulo 6.
+
+Para el paso Nº 3, se debe usar el siguiente branch:
+```
+git checkout m6-ejercicio-practico-02
+```
+
 ### Implementación de Almacenamiento Web
 Se implementó el uso de `SessionStorage` para almacenar la información del usuario logeado en el sistema, de manera que ésta sólo permanezca activa mientras la sesión esté activa. Cada vez que se finalice sesión o se cierre el browser, la información ya no se encuentra disponible y al volver a ingresar a la aplicación se solicitarán nuevamente las credenciales de acceso.
 
@@ -207,6 +215,11 @@ El reporte generado por Lighthouse se puede ver [aquí](reports/lighthouse/local
 
 ### Ejecución de PWA en ambiente local
 Ver instrucciones de ejecución en la sección Ejercicio práctico Nº1 - Módulo 6.
+
+Para el paso Nº 3, se debe usar el siguiente branch:
+```
+git checkout m6-ejercicio-practico-03
+```
 
 ### Creación del Manifiesto y Configuración Inicial
 Se creó el fichero `manifest.json`, con el fin de proveer datos claves para la PWA del hospital, tales como el nombre de la aplicación, links de los íconos, modo de pantalla y colores de fondo. En particular, en esta versión se usa el modo `fullscreen` para el despliegue de la aplicación.
