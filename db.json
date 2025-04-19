@@ -101,5 +101,31 @@
       "password": "U2FsdGVkX1+KR382ul3RqvOia3dCxFVyIIu2KsnyOk4=",
       "role": "U2FsdGVkX18JlO4RwrazdawBA/2+sW7jr2sEux1whu8="
     }
+  ],
+  "medications": [
+    {
+      "id": "4bf303ee-fde1-4bff-aa10-745a6cc20b6a",
+      "name": "Neurobionta",
+      "presentation": "Caja 30 comprimidos",
+      "stock": 50
+    },
+    {
+      "id": "b1a2c26c-42e0-4afc-ab14-836690806a92",
+      "name": "Ibuprofeno 400 mg",
+      "presentation": "Caja 20 comprimidos",
+      "stock": 80
+    },
+    {
+      "id": "313f3308-6ab9-4d3e-9837-501270323511",
+      "name": "Naproxeno sodico 550 mg",
+      "presentation": "Caja 10 comprimidos",
+      "stock": 60
+    },
+    {
+      "id": "cf012334-153f-4a39-a9b0-dddea671b4f4",
+      "name": "Paltomiel",
+      "presentation": "Jarabe 150 cc",
+      "stock": 40
+    }
   ]
 }

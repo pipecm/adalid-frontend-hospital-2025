@@ -40,7 +40,7 @@ http://localhost:5173
 
 Si todo lo anterior se realizó correctamente, se debería visualizar el sitio web como en la imagen siguiente:
 
-![Sitio web](images/website_react.png "Sitio web")
+![Sitio web](public/assets/images/website_react.png "Sitio web")
 
 ## Ejercicio técnico Nº2 - Módulo 4
 ### Manejo del DOM virtual en ReactJS
@@ -200,6 +200,28 @@ Se realizó una pequeña mejora al Service Worker implementado previamente, espe
 
 ### Pruebas de Rendimiento con Lighthouse
 El reporte generado por Lighthouse se puede ver [aquí](reports/lighthouse/localhost_3000-20250405T201732.html). Éste fue creado usando el módo incógnito del browser Google Chrome.
+
+## Ejercicio práctico Nº3 - Módulo 6 (Grupal)
+
+**Nota:** Debido al prolongado retraso en la entrega del presente ejercicio, éste tuvo que desarrollarse en solitario al no encontrar compañer@s de grupo disponibles al momento de su desarrollo. Asimismo, por el mismo motivo, se usó como base para el presente ejercicio lo desarrollado en las tareas anteriores.
+
+### Ejecución de PWA en ambiente local
+Ver instrucciones de ejecución en la sección Ejercicio práctico Nº1 - Módulo 6.
+
+### Creación del Manifiesto y Configuración Inicial
+Se creó el fichero `manifest.json`, con el fin de proveer datos claves para la PWA del hospital, tales como el nombre de la aplicación, links de los íconos, modo de pantalla y colores de fondo. En particular, en esta versión se usa el modo `fullscreen` para el despliegue de la aplicación.
+
+### Integración de Service Worker para Gestión Avanzada de Caché
+En esta versión, se implementó un Service Worker que maneja tres estrategias diferentes para la gestión de la caché de la aplicación: Cache-first para contenido estático, Network-first para contenido dinámico y Stale-While-Revalidate para contenido mixto.
+
+### Acceso a Periféricos del Sistema Operativo
+Para esta versión se añadió la gestión del acceso a la ubicación del usuario/dispositivo, de manera de mostrar en pantalla un banner con la distancia en kilómetros hasta el hospital en caso de autorizar el acceso a la ubicación, de lo contrario tal banner no se muestra en la vista de pantalla. Las coordenadas del hospital se configuraron en el archivo `params.json`. Para el cálculo de la distancia entre dos puntos, se instaló la librería `geolib`, la cual provee la función `getDistance()` para este fin.
+
+### Consumo de API Externa para Datos Médicos
+Para la gestión de los datos médicos se simuló una API REST sirviendo el fichero `db.json` a través de la librería `json-server`. Asimismo, se creó el hook `useRestApi()` con el propósito de proveer funciones que manejen las diversas operaciones CRUD entre la capa del front-end y la capa API/repositorio. En particular, se gestiona información referente a usuarios (administrador, doctores, pacientes), citas médicas, servicios y medicamentos.
+
+### Pruebas de Rendimiento y Optimización con Lighthouse
+El reporte generado por Lighthouse se puede ver [aquí](reports/lighthouse/localhost_3000-20250418T222338.html). Éste fue creado usando el módo incógnito del browser Google Chrome. Tal reporte proporcionó información para optimizar la vista para dispositivos móviles y la gestión del cache.
 
 ## Copyright
 © 2025 Hospital San Itario. Todos los derechos reservados.
